@@ -15,10 +15,6 @@ class MapPage extends StatelessWidget {
     final mapProv = Provider.of<MapProvider>(context);
     if (mapProv.mapController == null) {
       mapProv.initCamera(context);
-    } else {
-      if (mapProv.clinicList.isNotEmpty) {
-        mapProv.setClinicMarker();
-      }
     }
 
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

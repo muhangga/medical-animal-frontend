@@ -20,38 +20,24 @@ class _HomePageState extends State<HomePage> {
   Position? _currentPosition;
   String? _currentAddress;
 
-  bool isLoading = false;
-
   double? userLat;
   double? userLong;
 
-  _getUserCurrentLocation() async {
-    await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-            forceAndroidLocationManager: true)
-        .then((Position position) {
+  void _getUserCurrentLocation() async {
+    mapService.getGeoLocationPosition().then((value) {
       if (!mounted) {
         return;
       }
-
       setState(() {
-        _currentPosition = position;
+        _currentPosition = value;
         userLat = _currentPosition!.latitude;
         userLong = _currentPosition!.longitude;
-
         _getAddressFromLatLng();
-
-        print(userLat);
-        print(userLong);
       });
-    }).catchError((e) {
-      print(e);
-    }).onError((error, stackTrace) {
-      print(error.toString());
     });
   }
 
-  _getAddressFromLatLng() async {
+  void _getAddressFromLatLng() async {
     try {
       List<Placemark> placemark = await placemarkFromCoordinates(
           _currentPosition!.latitude, _currentPosition!.longitude);
@@ -61,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       }
       setState(() {
         _currentAddress =
-            '${placemarkData.subThoroughfare} ${placemarkData.thoroughfare}, ${placemarkData.subLocality} ${placemarkData.locality}, ${placemarkData.subAdministrativeArea} ${placemarkData.administrativeArea}, ${placemarkData.postalCode} ${placemarkData.country}';
+            '${placemarkData.thoroughfare}, ${placemarkData.subLocality} ${placemarkData.locality}, ${placemarkData.subAdministrativeArea} ${placemarkData.administrativeArea}, ${placemarkData.postalCode} ${placemarkData.country}';
         print(_currentAddress.toString());
       });
     } catch (e) {
@@ -72,14 +58,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    mapService.getGeoLocationPosition();
     _getUserCurrentLocation();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF1F1F1),
+      backgroundColor: const Color(0xffF1F1F1),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,20 +150,17 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 20, fontWeight: bold),
                       ),
                       const SizedBox(height: 10),
-                      isLoading
-                          ? const Center(
-                              child: SpinKitThreeInOut(
-                                color: kSecondaryColor,
-                                size: 20,
-                              ),
+                      userLat == null
+                          ? const SpinKitFadingCircle(
+                              color: Colors.red,
+                              size: 25,
                             )
                           : Text(
-                              userLat == null
-                                  ? "Mencari lokasi ..."
-                                  : userLat.toString(),
+                              userLat.toString(),
                               style: greyTextStyle.copyWith(
                                   fontSize: 16, fontWeight: medium),
-                              overflow: TextOverflow.clip),
+                              overflow: TextOverflow.clip,
+                            ),
                     ],
                   ),
                   Column(
@@ -189,13 +171,17 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 20, fontWeight: bold),
                       ),
                       const SizedBox(height: 10),
-                      Text(
-                          userLong == null
-                              ? "Mencari lokasi ..."
-                              : userLong.toString(),
-                          style: greyTextStyle.copyWith(
-                              fontSize: 16, fontWeight: medium),
-                          overflow: TextOverflow.clip),
+                      userLong == null
+                          ? const SpinKitFadingCircle(
+                              color: Colors.red,
+                              size: 25,
+                            )
+                          : Text(
+                              userLong.toString(),
+                              style: greyTextStyle.copyWith(
+                                  fontSize: 16, fontWeight: medium),
+                              overflow: TextOverflow.clip,
+                            ),
                     ],
                   )
                 ],
@@ -213,13 +199,18 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 20, fontWeight: bold),
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                      _currentAddress ?? "Mencari alamat...",
-                      style: greyTextStyle.copyWith(
-                          fontSize: 16, fontWeight: medium),
-                      overflow: TextOverflow.clip,
-                      textAlign: TextAlign.center,
-                    ),
+                    _currentAddress == null
+                        ? const SpinKitFadingCircle(
+                            color: Colors.red,
+                            size: 25,
+                          )
+                        : Text(
+                            _currentAddress ?? "Mencari alamat...",
+                            style: greyTextStyle.copyWith(
+                                fontSize: 16, fontWeight: medium),
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                          ),
                   ],
                 ),
               ),

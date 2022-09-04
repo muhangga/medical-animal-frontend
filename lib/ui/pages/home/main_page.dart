@@ -7,6 +7,8 @@ import 'package:medical_animal/core/services/map_service.dart';
 import 'package:medical_animal/ui/pages/home/home_page.dart';
 import 'package:medical_animal/ui/pages/home/list_klinik_page.dart';
 import 'package:medical_animal/ui/pages/home/map_near_clinics.dart';
+import 'package:medical_animal/ui/pages/home/maps_page.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -18,26 +20,45 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int bottomNavbarIndex = 0;
   PageController? pageController;
+  Permission permission = Permission.location;
 
   MapService mapService = MapService();
-  Position? _currentPosition;
 
-  String? position;
+  void _onItemTapped(int index) {
+    setState(() {
+      bottomNavbarIndex = index;
+      pageController!.animateToPage(index,
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    });
+  }
 
-  String _getPosition() {
-    if (position == null) {
-      return "Tidak ada lokasi";
+  void permissionCheck() async {
+    if (await permission.isGranted) {
+      print('Permission is granted');
     } else {
-      return position!;
+      Map<Permission, PermissionStatus> statuses = await [
+        Permission.location,
+      ].request();
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text(
+          'Aktifkan Lokasi untuk menggunakan fitur ini',
+          style: whiteTextStyle,
+        ),
+      ));
+
+      print(statuses[Permission.location]);
     }
   }
 
   @override
   void initState() {
     super.initState();
-    // mapService.getGeoLocationPosition();
-    print(_getPosition());
+    mapService.getGeoLocationPosition();
     pageController = PageController(initialPage: bottomNavbarIndex);
+    permissionCheck();
+
   }
 
   @override
@@ -118,10 +139,7 @@ class _MainPageState extends State<MainPage> {
             currentIndex: bottomNavbarIndex,
             onTap: (index) {
               setState(() {
-                bottomNavbarIndex = index;
-                pageController?.animateToPage(index,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeIn);
+                _onItemTapped(index);
               });
             },
             items: [

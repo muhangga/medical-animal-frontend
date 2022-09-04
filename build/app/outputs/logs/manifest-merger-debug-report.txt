@@ -29,6 +29,7 @@ INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\ap
 INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml:1:1-43:12
 INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml:1:1-43:12
 MERGED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml:1:1-43:12
+MERGED from [:permission_handler_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\permission_handler_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:google_maps_flutter] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\google_maps_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-17:12
@@ -102,6 +103,8 @@ uses-sdk
 INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml
 INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml
+MERGED from [:permission_handler_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\permission_handler_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\permission_handler_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_maps_flutter] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\google_maps_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_maps_flutter] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\google_maps_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44

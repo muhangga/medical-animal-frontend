@@ -20,36 +20,27 @@ class MapService {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.deniedForever) {
-        return Future.error('Location Not Available');
+        return Future.error('Location Denied Forever');
       }
 
       if (permission == LocationPermission.denied) {
-        return Future.error('Location Not Available');
+        return Future.error('Location Denied');
       }
 
-      if (permission != LocationPermission.always ||
-          permission != LocationPermission.whileInUse) {
-        return Future.error('Location Not Available');
+      if (permission == LocationPermission.whileInUse ||
+          permission == LocationPermission.always) {
+        position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+        return position;
       }
     }
 
     position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-        timeLimit: const Duration(seconds: 10));
+        desiredAccuracy: LocationAccuracy.high);
 
     print(position.latitude);
     print(position.longitude);
 
     return position;
   }
-}
-
-Future<String> getAddress(double lat, double long) async {
-  List<Placemark> placemark = await placemarkFromCoordinates(lat, long);
-
-  if (placemark != null && placemark.isNotEmpty) {
-    return placemark[0].name!;
-  }
-
-  return "";
 }
