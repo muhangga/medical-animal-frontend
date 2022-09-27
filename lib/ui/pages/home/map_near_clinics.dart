@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/common/theme.dart';
@@ -137,12 +138,12 @@ class _MapNearClinicsState extends State<MapNearClinics> {
     checkPermission();
     // mapService.getGeoLocationPosition();
     getUserAndClinicLocation();
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
@@ -169,34 +170,162 @@ class _MapNearClinicsState extends State<MapNearClinics> {
                       color: kMainColor,
                     ),
                   ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: FloatingActionButton(
-                backgroundColor: kSecondaryColor,
-                onPressed: () {
-                  _controller!.animateCamera(
-                    CameraUpdate.newCameraPosition(
-                      CameraPosition(
-                        target: _currentLocation!,
-                        zoom: 12,
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: FloatingActionButton(
+                      backgroundColor: kSecondaryColor,
+                      onPressed: () {
+                        _controller!.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              target: _currentLocation!,
+                              zoom: 12,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.my_location,
+                        color: kWhiteColor,
+                        size: 18,
                       ),
                     ),
-                  );
-                },
-                child: const Icon(
-                  Icons.my_location,
-                  color: kWhiteColor,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 80, left: 24, right: 24),
+              child: TextFormField(
+                autofocus: false,
+                decoration: InputDecoration(
+                  hintText: 'Cari Klinik',
+                  prefixIcon: const Icon(Icons.search, color: kMainColor),
+                  contentPadding: const EdgeInsets.only(
+                    left: 15.0,
+                    top: 15.0,
+                  ),
+                  filled: true,
+                  fillColor: kWhiteColor,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: kMainColor),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: kWhiteColor),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: const Padding(
-                padding: EdgeInsets.only(top: 30, left: 30),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
+            Positioned(
+              bottom: 40,
+              child: Container(
+                padding: const EdgeInsets.only(left: 24),
+                width: 400,
+                height: 130,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: listClinic.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              _controller!.animateCamera(
+                                CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                    target: LatLng(listClinic[index].latitude!,
+                                        listClinic[index].longitude!),
+                                    zoom: 12,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              width: 200,
+                              height: 130,
+                              decoration: BoxDecoration(
+                                color: kWhiteColor,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: kMainColor.withOpacity(0.2)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        14, 14, 10, 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          listClinic[index].clinicName!,
+                                          style: blackTextStyle.copyWith(
+                                              fontSize: 16, fontWeight: bold),
+                                        ),
+                                        Text(
+                                          listClinic[index].address!,
+                                          style: greyTextStyle.copyWith(
+                                              fontSize: 12),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                                MdiIcons.mapMarkerDistance,
+                                                color: kMainColor,
+                                                size: 16),
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              listClinic[index]
+                                                      .distance!
+                                                      .toStringAsFixed(2) +
+                                                  ' km',
+                                              style: redTextStyle.copyWith(
+                                                  fontSize: 14,
+                                                  fontWeight: bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -11,6 +11,7 @@ const Color kWhiteColor = Color(0xFFFFFFFF);
 const Color kYellowColor = Color(0xFFFBD460);
 const Color kGreyColor = Color(0xFFADADAD);
 const Color kLightGreyColor = Color(0xffE5E5E5);
+const Color kRedColor = Colors.red;
 
 TextStyle mainTextStyle = GoogleFonts.raleway(
   color: kMainColor,
@@ -32,6 +33,9 @@ TextStyle yellowTextStyle = GoogleFonts.raleway(
 );
 TextStyle lightGreyTextStyle = GoogleFonts.raleway(
   color: kLightGreyColor,
+);
+TextStyle redTextStyle = GoogleFonts.raleway(
+  color: kRedColor,
 );
 
 FontWeight light = FontWeight.w300;
