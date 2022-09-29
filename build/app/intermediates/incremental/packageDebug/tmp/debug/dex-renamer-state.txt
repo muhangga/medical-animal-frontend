@@ -1,4 +1,4 @@
-#Tue Sep 27 14:35:30 ICT 2022
+#Thu Sep 29 17:51:15 ICT 2022
 base.0=C\:\\Users\\M. Angga\\FlutterProject\\skripsi\\medical_animal\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

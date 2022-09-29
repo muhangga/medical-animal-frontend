@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/common/theme.dart';
@@ -19,6 +20,7 @@ class _ListKlinikPageState extends State<ListKlinikPage>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
   Position? _currentPosition;
+  LatLng? _currentLocation;
 
   List<ClinicModel> listClinic = [];
   List<ClinicModel> nearbyClinic = [];
@@ -39,31 +41,37 @@ class _ListKlinikPageState extends State<ListKlinikPage>
     print(statuses[Permission.location]);
   }
 
-  _getUserPosition() async {
-    await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-            forceAndroidLocationManager: true)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
+  // Future<void> _getUserPosition() async {
+  //   await Geolocator.getCurrentPosition(
+  //           desiredAccuracy: LocationAccuracy.high,
+  //           forceAndroidLocationManager: true)
+  //       .then((Position position) {
+  //     setState(() {
+  //       _currentPosition = position;
+  //     });
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
 
-        _nearbyClinic();
-      });
-    }).catchError((e) {
-      print(e);
-    });
-  }
+  // Future<void> _nearbyClinicByUser() async {
+  //   if (_currentPosition != null) {
+  //     await apiService
+  //         .nearClinic(_currentPosition!.latitude, _currentPosition!.longitude)
+  //         .then((value) {
+  //       setState(() {
+  //         nearbyClinic = value;
+  //       });
+  //     });
+  //   } else {
+  //     print('null');
+  //   }
+  // }
 
-  _nearbyClinicByUser() async {
-    await apiService.nearClinic(
-        _currentPosition!.latitude, _currentPosition!.longitude);
-  }
-
-  Future<List<ClinicModel>> _nearbyClinic() async {
-    await apiService.nearClinic(
-        _currentPosition!.latitude, _currentPosition!.longitude);
-    return listClinic;
-  }
+  // Future<void> getUserAndNearClinicLocation() async {
+  //   await _getUserPosition();
+  //   await _nearbyClinicByUser();
+  // }
 
   final List<Tab> myTabs = [
     const Tab(
@@ -76,9 +84,8 @@ class _ListKlinikPageState extends State<ListKlinikPage>
   void initState() {
     super.initState();
     checkPermission();
-    // getNearbyClnic();
-    // print(getNearbyClnic);
-    print(_getUserPosition());
+
+    // print(getUserAndNearClinicLocation());
     _tabController = TabController(length: myTabs.length, vsync: this);
   }
 
@@ -122,9 +129,8 @@ class _ListKlinikPageState extends State<ListKlinikPage>
           controller: _tabController,
           children: [
             _allClinicWidget(),
-            // _nearbyClinicWidget(),
+            // // _nearbyClinicWidget(),
             NearbyClinic(),
-            // const Center(child: Text("test"))
           ],
         )),
       ),
@@ -180,52 +186,4 @@ class _ListKlinikPageState extends State<ListKlinikPage>
     );
   }
 
-  // Widget _nearbyClinicWidget() {
-  //   return FutureBuilder(
-  //     future: _getUserPosition(),
-  //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //       if (snapshot.hasData) {
-  //         List<ClinicModel> listClinic = snapshot.data;
-  //         return SingleChildScrollView(
-  //           child: Container(
-  //             margin: const EdgeInsets.only(top: 10, bottom: 90),
-  //             child: Column(
-  //               children: listClinic
-  //                   .map((data) => Padding(
-  //                         padding: const EdgeInsets.all(8.0),
-  //                         child: Card(
-  //                           child: ListTile(
-  //                             title: Text(
-  //                               data.clinicName.toString(),
-  //                               overflow: TextOverflow.clip,
-  //                             ),
-  //                             subtitle: Text(
-  //                               data.address.toString(),
-  //                               overflow: TextOverflow.clip,
-  //                             ),
-  //                             trailing: data.distance != null
-  //                                 ? Text('${data.distance}' + ' km')
-  //                                 : Text('${data.latitude}' +
-  //                                     '\n' +
-  //                                     '${data.longitude}'),
-  //                           ),
-  //                         ),
-  //                       ))
-  //                   .toList(),
-  //             ),
-  //           ),
-  //         );
-  //       } else {
-  //         return const SizedBox(
-  //           height: 340,
-  //           child: Center(
-  //             child: SpinKitDoubleBounce(
-  //               color: kSecondaryColor,
-  //             ),
-  //           ),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
 }
