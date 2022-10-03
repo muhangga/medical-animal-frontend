@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/map_service.dart';
+import 'package:medical_animal/core/services/permission_service.dart';
 import 'package:medical_animal/ui/pages/home/home_page.dart';
 import 'package:medical_animal/ui/pages/home/list_klinik_page.dart';
 import 'package:medical_animal/ui/pages/home/map_near_clinics.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -19,9 +18,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int bottomNavbarIndex = 0;
   PageController? pageController;
-  Permission permission = Permission.location;
 
   MapService mapService = MapService();
+  PermissionService permissionService = PermissionService();
 
   void _onItemTapped(int index) {
     setState(() {
@@ -31,33 +30,12 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  void permissionCheck() async {
-    if (await permission.isGranted) {
-      print('Permission is granted');
-    } else {
-      Map<Permission, PermissionStatus> statuses = await [
-        Permission.location,
-      ].request();
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.red,
-        content: Text(
-          'Aktifkan Lokasi untuk menggunakan fitur ini',
-          style: whiteTextStyle,
-        ),
-      ));
-
-      print(statuses[Permission.location]);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     mapService.getGeoLocationPosition();
     pageController = PageController(initialPage: bottomNavbarIndex);
-    permissionCheck();
-
+    permissionService.checkPermission(context);
   }
 
   @override

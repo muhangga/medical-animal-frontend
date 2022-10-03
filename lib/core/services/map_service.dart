@@ -43,4 +43,8 @@ class MapService {
 
     return position;
   }
+
+  Future<void> openMap() async {
+    Position? position = await getGeoLocationPosition();
+  }
 }
