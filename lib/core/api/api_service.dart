@@ -44,4 +44,25 @@ class ApiService {
       throw Exception('Something went wrong!');
     }
   }
+
+  Future<List<ClinicModel>> nearClinicById(double? userLat, double? userLong,
+      int? clinicId) async {
+    var url =
+        baseURL + "near-clinic/$clinicId?latitude=$userLat&longitude=$userLong";
+    try {
+      var response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var responseJson = json.decode(response.body)["data"];
+
+        print(responseJson);
+        return (responseJson as List)
+            .map((data) => ClinicModel.fromJson(data))
+            .toList();
+      } else {
+        throw Exception('Failed to load post');
+      }
+    } catch (e) {
+      throw Exception('Something went wrong!');
+    }
+  }
 }

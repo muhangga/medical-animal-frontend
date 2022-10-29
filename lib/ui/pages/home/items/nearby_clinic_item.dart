@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/map_service.dart';
-import 'package:medical_animal/ui/widgets/empty_item_widget.dart';
-import 'package:medical_animal/ui/widgets/empty_location_widget.dart';
+import 'package:medical_animal/ui/pages/home/detail_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class NearbyClinicItem extends StatefulWidget {
-  NearbyClinicItem({Key? key}) : super(key: key);
+  const NearbyClinicItem({Key? key}) : super(key: key);
 
   @override
   State<NearbyClinicItem> createState() => _NearbyClinicItemState();
@@ -81,6 +81,8 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
 
   @override
   Widget build(BuildContext context) {
+    
+
     if (_currentPosition != null) {
       return Column(
         children: [
@@ -97,33 +99,51 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
                       child: Text('No Data'),
                     );
                   }
-                  return Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      child: Card(
-                          child: Container(
-                        padding: const EdgeInsets.all(10),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(6),
-                          leading: const Icon(
-                            Icons.location_on,
-                            color: Colors.red,
-                          ),
-                          title: Text(
-                            nearbyClinic[index].clinicName!,
-                            style: blackTextStyle.copyWith(
-                                fontSize: 18, fontWeight: bold),
-                          ),
-                          subtitle: Text(nearbyClinic[index].address!,
-                              style: greyTextStyle.copyWith(fontSize: 14)),
-                          trailing: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.directions,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                    clinicName: nearbyClinic[index].clinicName,
+                                    address: nearbyClinic[index].address,
+                                    phone: nearbyClinic[index].phoneNumber,
+                                    uLat: _currentPosition!.latitude.toString(),
+                                    uLong:
+                                        _currentPosition!.longitude.toString(),
+                                    cLat: nearbyClinic[index].latitude,
+                                    cLong: nearbyClinic[index].longitude,
+                                    distance: nearbyClinic[index].distance,
+                                  )));
+                    },
+                    child: Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: Card(
+                            child: Container(
+                          padding: const EdgeInsets.all(10),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(6),
+                            leading: const Icon(
+                              Icons.location_on,
                               color: Colors.red,
                             ),
+                            title: Text(
+                              nearbyClinic[index].clinicName!,
+                              style: blackTextStyle.copyWith(
+                                  fontSize: 18, fontWeight: bold),
+                            ),
+                            subtitle: Text(nearbyClinic[index].address!,
+                                style: greyTextStyle.copyWith(fontSize: 14)),
+                            trailing: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.directions,
+                                color: Colors.red,
+                              ),
+                            ),
                           ),
-                        ),
-                      )));
+                        ))),
+                  );
                 },
               ),
             ),

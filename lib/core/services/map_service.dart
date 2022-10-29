@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MapService {
   Future<Position?> getGeoLocationPosition() async {
@@ -44,7 +44,11 @@ class MapService {
     return position;
   }
 
-  Future<void> openMap() async {
-    Position? position = await getGeoLocationPosition();
+  Future<void> launchUrlPath(String path) async {
+    if (!await launchUrl(Uri.parse(path))) {
+      throw 'Could not launch $path';
+    }
+
+    await launchUrl(Uri.parse(path));
   }
 }
