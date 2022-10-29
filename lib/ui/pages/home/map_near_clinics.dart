@@ -78,7 +78,7 @@ class _MapNearClinicsState extends State<MapNearClinics> {
   Future<void> _getNearClinicLocation() async {
     if (_currentLocation != null) {
       final Uint8List markerIcon =
-          await getBytesFromAsset('assets/veterinarian.png', 100);
+          await getBytesFromAsset('assets/ic_clinic.png', 100);
 
       await apiService
           .nearClinic(_currentLocation!.latitude, _currentLocation!.longitude)
@@ -136,7 +136,7 @@ class _MapNearClinicsState extends State<MapNearClinics> {
               listClinic[index].latitude!,
               listClinic[index].longitude!,
             ),
-            zoom: 12,
+            zoom: 14.4746,
           ),
         ),
       );
@@ -170,10 +170,8 @@ class _MapNearClinicsState extends State<MapNearClinics> {
                 ? GoogleMap(
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
-                      target: _currentLocation! != null
-                          ? _currentLocation!
-                          : const LatLng(-6.1753924, 106.8249641),
-                      zoom: 15,
+                      target: _currentLocation!,
+                      zoom: 12,
                     ),
                     zoomControlsEnabled: false,
                     myLocationButtonEnabled: false,
@@ -299,14 +297,14 @@ class _MapNearClinicsState extends State<MapNearClinics> {
                 title: Text(
                   listClinic[index].clinicName!,
                   style: blackTextStyle.copyWith(
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: bold,
                   ),
                 ),
                 subtitle: Text(
-                  listClinic[index].address!,
+                  "Jarak : ${listClinic[index].distance?.toStringAsFixed(4)} km",
                   style: greyTextStyle.copyWith(
-                    fontSize: 12,
+                    fontSize: 13,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -330,7 +328,7 @@ class _MapNearClinicsState extends State<MapNearClinics> {
                     width: 40,
                     height: 40,
                     decoration: const BoxDecoration(
-                      color: kMainColor,
+                      color: kRedColor,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(

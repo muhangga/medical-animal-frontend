@@ -3,10 +3,12 @@ application
 INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml:9:4-42:19
 MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-15:19
 MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-15:19
-MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:36:5-42:19
-MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:36:5-42:19
+MERGED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-12:19
+MERGED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-12:19
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\340206bb4856bf61e48bd10632b21882\jetified-play-services-location-17.0.0\AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\340206bb4856bf61e48bd10632b21882\jetified-play-services-location-17.0.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:36:5-42:19
 MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
 MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
 MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\792892a7083917130fbc18623188f241\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:22:5-20
@@ -30,13 +32,14 @@ INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\ap
 INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml:1:1-43:12
 MERGED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml:1:1-43:12
 MERGED from [:permission_handler_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\permission_handler_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-17:12
 MERGED from [:google_maps_flutter] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\google_maps_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-17:12
 MERGED from [:geocoding] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geocoding\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-14:12
 MERGED from [:path_provider_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\340206bb4856bf61e48bd10632b21882\jetified-play-services-location-17.0.0\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:16:1-24:12
 MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\792892a7083917130fbc18623188f241\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\ea13efc794b0e1323e550b6fc47b72e2\jetified-play-services-tasks-18.0.1\AndroidManifest.xml:2:1-6:12
@@ -105,20 +108,22 @@ INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\ap
 INJECTED from C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\android\app\src\main\AndroidManifest.xml
 MERGED from [:permission_handler_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\permission_handler_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:permission_handler_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\permission_handler_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_maps_flutter] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\google_maps_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_maps_flutter] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\google_maps_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:geocoding] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geocoding\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:geocoding] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geocoding\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\path_provider_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\340206bb4856bf61e48bd10632b21882\jetified-play-services-location-17.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\340206bb4856bf61e48bd10632b21882\jetified-play-services-location-17.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:18:5-43
 MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:18:5-43
 MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\792892a7083917130fbc18623188f241\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:20:5-44
@@ -179,6 +184,14 @@ ADDED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medica
 		ADDED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-53
 	android:name
 		ADDED from [:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-77
+activity#io.flutter.plugins.urllauncher.WebViewActivity
+ADDED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-11:74
+	android:exported
+		ADDED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-37
+	android:theme
+		ADDED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-71
+	android:name
+		ADDED from [:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-74
 uses-feature#0x00020000
 ADDED from [com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:26:5-28:35
 	android:glEsVersion

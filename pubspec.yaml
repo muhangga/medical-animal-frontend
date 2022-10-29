@@ -38,8 +38,8 @@ dependencies:
   google_maps_flutter: ^2.0.9
   http: ^0.13.3
   material_design_icons_flutter: ^5.0.6996
-  provider: ^6.0.1
   permission_handler: ^9.1.0
+  provider: ^6.0.1
   url_launcher: ^6.0.10
 
 dev_dependencies:

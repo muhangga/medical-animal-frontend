@@ -97,30 +97,39 @@
 75-->[:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-35
 76            android:exported="false"
 76-->[:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-37
-77            android:foregroundServiceType="location" /> <!-- Needs to be explicitly declared on P+ -->
+77            android:foregroundServiceType="location" />
 77-->[:geolocator_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-53
-78        <uses-library
-78-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:39:9-41:40
-79            android:name="org.apache.http.legacy"
-79-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:40:13-50
-80            android:required="false" />
-80-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:41:13-37
-81
-82        <activity
-82-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
-83            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-83-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
-84            android:exported="false"
-84-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
-85            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-85-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+78
+79        <activity
+79-->[:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-11:74
+80            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+80-->[:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-74
+81            android:exported="false"
+81-->[:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-37
+82            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /> <!-- Needs to be explicitly declared on P+ -->
+82-->[:url_launcher_android] C:\Users\M. Angga\FlutterProject\skripsi\medical_animal\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-71
+83        <uses-library
+83-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:39:9-41:40
+84            android:name="org.apache.http.legacy"
+84-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:40:13-50
+85            android:required="false" />
+85-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\104f38c03eaad6e2d693547d71adf305\jetified-play-services-maps-18.0.2\AndroidManifest.xml:41:13-37
 86
-87        <meta-data
-87-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\2457fa5d6012b18885c4b2ecd3ae746e\jetified-play-services-basement-18.0.0\AndroidManifest.xml:21:9-23:69
-88            android:name="com.google.android.gms.version"
-88-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\2457fa5d6012b18885c4b2ecd3ae746e\jetified-play-services-basement-18.0.0\AndroidManifest.xml:22:13-58
-89            android:value="@integer/google_play_services_version" />
-89-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\2457fa5d6012b18885c4b2ecd3ae746e\jetified-play-services-basement-18.0.0\AndroidManifest.xml:23:13-66
-90    </application>
+87        <activity
+87-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+88            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+88-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+89            android:exported="false"
+89-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+90            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+90-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\e1c5805fd7b0dd07bf6c63b1f33a8d8f\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
 91
-92</manifest>
+92        <meta-data
+92-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\2457fa5d6012b18885c4b2ecd3ae746e\jetified-play-services-basement-18.0.0\AndroidManifest.xml:21:9-23:69
+93            android:name="com.google.android.gms.version"
+93-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\2457fa5d6012b18885c4b2ecd3ae746e\jetified-play-services-basement-18.0.0\AndroidManifest.xml:22:13-58
+94            android:value="@integer/google_play_services_version" />
+94-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\M. Angga\.gradle\caches\transforms-2\files-2.1\2457fa5d6012b18885c4b2ecd3ae746e\jetified-play-services-basement-18.0.0\AndroidManifest.xml:23:13-66
+95    </application>
+96
+97</manifest>
