@@ -54,7 +54,7 @@ class _DetailPageState extends State<DetailPage> {
 
   void _setMarker() async {
     final Uint8List userIcon =
-        await getBytesFromAsset('assets/ic_user.png', 220);
+        await getBytesFromAsset('assets/ic_user2.png', 220);
 
     final Uint8List markerIcon =
         await getBytesFromAsset('assets/ic_clinic.png', 100);
@@ -81,7 +81,7 @@ class _DetailPageState extends State<DetailPage> {
 
     PolylinePoints? polylinePoints = PolylinePoints();
 
-    PolylineResult result = await polylinePoints!.getRouteBetweenCoordinates(
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         googleAPIKey,
         PointLatLng(double.parse(widget.uLat!), double.parse(widget.uLong!)),
         PointLatLng(widget.cLat!, widget.cLong!),
@@ -101,21 +101,29 @@ class _DetailPageState extends State<DetailPage> {
             width: 3);
         polylines[id] = polyline;
       });
-    } else {
-      print('No route found!');
     }
+
+    print(result.status);
   }
 
   addPolyline(List<LatLng> polylineCoordinates) {
     PolylineId id = PolylineId('poly');
     Polyline polyline = Polyline(
         polylineId: id,
-        visible: true,
-        color: Colors.blue,
+        color: Colors.green,
         points: polylineCoordinates,
-        width: 8);
+        width: 4);
     polylines[id] = polyline;
     setState(() {});
+  }
+
+  void _addPolyline() {
+    List<LatLng> polylineCoordinates = [];
+    polylineCoordinates.add(LatLng(double.parse(widget.uLat!),
+        double.parse(widget.uLong!))); // user location
+    polylineCoordinates
+        .add(LatLng(widget.cLat!, widget.cLong!)); // clinic location
+    addPolyline(polylineCoordinates);
   }
 
   @override
@@ -126,7 +134,8 @@ class _DetailPageState extends State<DetailPage> {
     });
 
     _setMarker();
-    getDirections();
+    // getDirections();
+    _addPolyline();
   }
 
   @override
@@ -142,7 +151,7 @@ class _DetailPageState extends State<DetailPage> {
                   double.parse(widget.uLat.toString()),
                   double.parse(widget.uLong.toString()),
                 ),
-                zoom: 13,
+                zoom: 11,
               ),
               zoomControlsEnabled: true,
               myLocationButtonEnabled: false,
