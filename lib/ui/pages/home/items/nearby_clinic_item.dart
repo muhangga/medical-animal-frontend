@@ -45,6 +45,7 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
             desiredAccuracy: LocationAccuracy.high,
             forceAndroidLocationManager: true)
         .then((Position position) {
+      if (!mounted) return;
       setState(() {
         _currentPosition = position;
       });
@@ -58,6 +59,7 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
       await apiService
           .nearClinic(_currentPosition!.latitude, _currentPosition!.longitude)
           .then((value) {
+        if (!mounted) return;
         setState(() {
           nearbyClinic = value;
         });
@@ -81,8 +83,6 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     if (_currentPosition != null) {
       return Column(
         children: [
@@ -117,15 +117,17 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
                                   )));
                     },
                     child: Container(
-                        margin: const EdgeInsets.only(bottom: 10),
+                        margin: const EdgeInsets.only(bottom: 2),
                         child: Card(
+                            // elevation: 1,
                             child: Container(
                           padding: const EdgeInsets.all(10),
                           child: ListTile(
                             contentPadding: const EdgeInsets.all(6),
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.red,
+                            leading: Image.asset(
+                              'assets/ic_clinic2.png',
+                              width: 50,
+                              height: 50,
                             ),
                             title: Text(
                               nearbyClinic[index].clinicName!,

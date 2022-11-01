@@ -53,6 +53,7 @@ class _MapNearClinicsState extends State<MapNearClinics> {
             desiredAccuracy: LocationAccuracy.high,
             forceAndroidLocationManager: true)
         .then((Position position) {
+      if (!mounted) return;
       setState(() {
         _currentPosition = position;
 
@@ -83,6 +84,7 @@ class _MapNearClinicsState extends State<MapNearClinics> {
       await apiService
           .nearClinic(_currentLocation!.latitude, _currentLocation!.longitude)
           .then((value) {
+        if (!mounted) return;
         setState(() {
           listClinic = value;
           for (var i = 0; i < listClinic.length; i++) {

@@ -27,7 +27,7 @@ class _AllClinicItemState extends State<AllClinicItem> {
               child: Column(
                 children: listClinic
                     .map((data) => Container(
-                        margin: const EdgeInsets.only(bottom: 10),
+                        margin: const EdgeInsets.only(bottom: 2),
                         child: Card(
                             child: Container(
                           padding: const EdgeInsets.all(10),

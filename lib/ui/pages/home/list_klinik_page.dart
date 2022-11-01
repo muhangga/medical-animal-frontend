@@ -51,6 +51,7 @@ class _ListKlinikPageState extends State<ListKlinikPage>
       initialIndex: 1,
       length: 2,
       child: Scaffold(
+        backgroundColor: Color(0xffF5F5F5),
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(130),
           child: AppBar(
