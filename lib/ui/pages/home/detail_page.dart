@@ -144,7 +144,7 @@ class _DetailPageState extends State<DetailPage> {
       body: Stack(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height / 1.3,
+            height: MediaQuery.of(context).size.height / 1.5,
             child: GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: LatLng(
@@ -161,7 +161,7 @@ class _DetailPageState extends State<DetailPage> {
                 mapController = controller;
                 mapController!.setMapStyle(_mapStyle);
               },
-              padding: const EdgeInsets.only(bottom: 50),
+              padding: const EdgeInsets.only(bottom: 80),
               minMaxZoomPreference: const MinMaxZoomPreference(10, 20),
               markers: Set.from(
                 allMarkers,
