@@ -13,6 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:medical_animal/core/common/theme.dart';
 
+import 'detail_map_page.dart';
 import 'detail_page.dart';
 
 class MapPage extends StatefulWidget {
@@ -34,16 +35,6 @@ class _MapState extends State<MapPage> {
   MapService mapService = MapService();
   LocationPermission? permission;
 
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
-
   Future<void> _getUserPosition() async {
     await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high,
@@ -57,16 +48,16 @@ class _MapState extends State<MapPage> {
             LatLng(_currentPosition!.latitude, _currentPosition!.longitude);
         print(_currentLocation);
 
-        mapController!.addSymbol(
-          SymbolOptions(
-            geometry: _currentPosition != null
-                ? LatLng(
-                    _currentPosition!.latitude, _currentPosition!.longitude)
-                : LatLng(0, 0),
-            iconImage: 'assets/ic_user.png',
-            iconSize: 0.3,
-          ),
-        );
+        // mapController!.addSymbol(
+        //   SymbolOptions(
+        //     geometry: _currentPosition != null
+        //         ? LatLng(
+        //             _currentPosition!.latitude, _currentPosition!.longitude)
+        //         : LatLng(0, 0),
+        //     iconImage: 'assets/ic_user.png',
+        //     iconSize: 0.3,
+        //   ),
+        // );
       });
     }).catchError((e) {
       print(e);
@@ -82,17 +73,25 @@ class _MapState extends State<MapPage> {
         setState(() {
           listClinic = value;
           for (var i = 0; i < listClinic.length; i++) {
-            mapController?.addSymbol(SymbolOptions(
-                geometry: LatLng(
-                    double.parse(listClinic[i].latitude.toString()),
-                    double.parse(listClinic[i].longitude.toString())),
-                iconImage: 'assets/ic_clinic.png',
-                iconSize: 0.3));
+            mapController?.addSymbol(
+              SymbolOptions(
+                  geometry: LatLng(
+                      double.parse(listClinic[i].latitude.toString()),
+                      double.parse(listClinic[i].longitude.toString())),
+                  iconImage: 'assets/ic_clinic.png',
+                  iconSize: 0.3),
+            );
           }
         });
       });
     } else {
-      print('null');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Lokasi tidak ditemukan silahkan hidupkan GPS anda'),
+        ),
+      );
+      Navigator.pop(context);
     }
   }
 
@@ -112,17 +111,8 @@ class _MapState extends State<MapPage> {
     print(statuses[Permission.location]);
   }
 
-  _onMapcreated(MapboxMapController controller) {
+  void _onMapcreated(MapboxMapController controller) {
     mapController = controller;
-  }
-
-  _onStyleLoadedCallback() async {
-    await getBytesFromAsset('assets/ic_user.png', 10).then((value) {
-      mapController!.addImage('assets/ic_user.png', value);
-    });
-    await getBytesFromAsset('assets/ic_clinic.png', 10).then((value) {
-      mapController!.addImage('assets/ic_clinic.png', value);
-    });
   }
 
   void _onSelected(int index) {
@@ -134,7 +124,7 @@ class _MapState extends State<MapPage> {
               listClinic[index].latitude!,
               listClinic[index].longitude!,
             ),
-            zoom: 14.4746,
+            zoom: 14.0,
           ),
         ),
       );
@@ -164,12 +154,12 @@ class _MapState extends State<MapPage> {
                       ? LatLng(_currentPosition!.latitude,
                           _currentPosition!.longitude)
                       : LatLng(0, 0),
-                  zoom: 12.0,
+                  zoom: 11.0,
                 ),
                 onMapCreated: _onMapcreated,
-                // myLocationEnabled: true,
-                // myLocationRenderMode: MyLocationRenderMode.GPS,
-                // myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+                myLocationEnabled: true,
+                myLocationRenderMode: MyLocationRenderMode.GPS,
+                myLocationTrackingMode: MyLocationTrackingMode.Tracking,
                 // onStyleLoadedCallback: _onStyleLoadedCallback,
               ),
             ),
@@ -269,12 +259,12 @@ class _MapState extends State<MapPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DetailPage(
+                            builder: (context) => DetailMapPage(
                                   clinicName: listClinic[index].clinicName,
                                   address: listClinic[index].address,
                                   phone: listClinic[index].phoneNumber,
-                                  uLat: _currentLocation!.latitude.toString(),
-                                  uLong: _currentLocation!.longitude.toString(),
+                                  uLat: _currentPosition!.latitude.toString(),
+                                  uLong: _currentPosition!.longitude.toString(),
                                   cLat: listClinic[index].latitude,
                                   cLong: listClinic[index].longitude,
                                   distance: listClinic[index].distance,
