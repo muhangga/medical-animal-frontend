@@ -6,6 +6,7 @@ import 'package:medical_animal/core/services/map_service.dart';
 import 'package:medical_animal/core/services/permission_service.dart';
 import 'package:medical_animal/ui/pages/home/home_page.dart';
 import 'package:medical_animal/ui/pages/home/list_klinik_page.dart';
+import 'package:medical_animal/ui/pages/home/map.dart';
 import 'package:medical_animal/ui/pages/home/map_near_clinics.dart';
 
 class MainPage extends StatefulWidget {
@@ -83,7 +84,8 @@ class _MainPageState extends State<MainPage> {
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const MapNearClinics();
+                    // return const MapNearClinics();
+                    return const MapPage();
                   }));
                 },
               ),
