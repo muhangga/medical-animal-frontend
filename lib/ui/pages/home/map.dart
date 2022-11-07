@@ -9,6 +9,7 @@ import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/common/constant.dart';
 import 'package:medical_animal/core/services/map_service.dart';
+import 'package:medical_animal/core/services/mapbox_directions.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:medical_animal/core/common/theme.dart';
@@ -33,6 +34,7 @@ class _MapState extends State<MapPage> {
   Position? _currentPosition;
   LatLng? _currentLocation;
   MapService mapService = MapService();
+  MapboxService mapboxService = MapboxService();
   LocationPermission? permission;
 
   Future<void> _getUserPosition() async {
@@ -47,17 +49,6 @@ class _MapState extends State<MapPage> {
         _currentLocation =
             LatLng(_currentPosition!.latitude, _currentPosition!.longitude);
         print(_currentLocation);
-
-        // mapController!.addSymbol(
-        //   SymbolOptions(
-        //     geometry: _currentPosition != null
-        //         ? LatLng(
-        //             _currentPosition!.latitude, _currentPosition!.longitude)
-        //         : LatLng(0, 0),
-        //     iconImage: 'assets/ic_user.png',
-        //     iconSize: 0.3,
-        //   ),
-        // );
       });
     }).catchError((e) {
       print(e);
@@ -131,11 +122,13 @@ class _MapState extends State<MapPage> {
     });
   }
 
+
   @override
   void initState() {
     super.initState();
     checkPermission();
     getUserAndClinicLocation();
+
   }
 
   @override
@@ -263,8 +256,8 @@ class _MapState extends State<MapPage> {
                                   clinicName: listClinic[index].clinicName,
                                   address: listClinic[index].address,
                                   phone: listClinic[index].phoneNumber,
-                                  uLat: _currentPosition!.latitude.toString(),
-                                  uLong: _currentPosition!.longitude.toString(),
+                                  uLat: _currentPosition!.latitude,
+                                  uLong: _currentPosition!.longitude,
                                   cLat: listClinic[index].latitude,
                                   cLong: listClinic[index].longitude,
                                   distance: listClinic[index].distance,

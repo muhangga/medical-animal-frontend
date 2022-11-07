@@ -1,17 +1,18 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:medical_animal/core/common/constant.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:medical_animal/core/services/mapbox_directions.dart';
 
 class DetailMapPage extends StatefulWidget {
   String? clinicName;
   String? address;
   String? phone;
-  String? uLat;
-  String? uLong;
+  double? uLat;
+  double? uLong;
   double? cLat;
   double? cLong;
   double? distance;
@@ -32,6 +33,71 @@ class DetailMapPage extends StatefulWidget {
 }
 
 class _DetailMapPageState extends State<DetailMapPage> {
+  MapboxMapController? mapController;
+  MapboxService mapboxService = MapboxService();
+
+  void _directionsPolyline() async {
+    final _directions = await mapboxService.getDirectionAPIResponse(
+        widget.uLong!, widget.uLat!, widget.cLong!, widget.cLat!);
+
+    Map geometry = _directions['geometry'];
+
+    final _fills = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": 0,
+          "properties": <String, dynamic>{},
+          "geometry": geometry,
+        },
+      ]
+    };
+
+    await mapController!
+        .addSource("fills", GeojsonSourceProperties(data: _fills));
+    await mapController!.addLineLayer(
+        "fills",
+        "lines",
+        LineLayerProperties(
+          lineColor: Colors.green.toHexStringRGB(),
+          lineWidth: 4.0,
+          lineCap: "round",
+          lineJoin: "round",
+        ));
+  }
+
+  void _setMarker() async {
+    mapController!.addSymbol(SymbolOptions(
+      geometry: LatLng(widget.uLat!, widget.uLong!),
+      iconImage: 'assets/ic_user2.png',
+      iconSize: 0.4,
+      zIndex: 99,
+    ));
+
+    mapController!.addSymbol(SymbolOptions(
+      geometry: LatLng(widget.cLat!, widget.cLong!),
+      iconImage: 'assets/ic_clinic.png',
+      iconSize: 0.4,
+      zIndex: 99,
+    ));
+
+    mapController!.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(widget.uLat!, widget.uLong!),
+          zoom: 15,
+        ),
+      ),
+    );
+
+    _directionsPolyline();
+  }
+
+  void _onMapcreated(MapboxMapController controller) {
+    mapController = controller;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,38 +105,6 @@ class _DetailMapPageState extends State<DetailMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    MapboxMapController? mapController;
-
-    void _setMarker() async {
-      mapController!.addSymbol(SymbolOptions(
-          geometry:
-              LatLng(double.parse(widget.uLat!), double.parse(widget.uLong!)),
-          iconImage: 'assets/ic_user2.png',
-          iconSize: 0.2));
-
-      mapController!.addSymbol(SymbolOptions(
-          geometry: LatLng(widget.cLat!, widget.cLong!),
-          iconImage: 'assets/ic_clinic.png',
-          iconSize: 0.2));
-    }
-
-    void _addPolyline(int index, List<LatLng> points) {
-      mapController!.addLine(LineOptions(
-          geometry: points,
-          lineColor: "#3bb2d0",
-          lineWidth: 4.0,
-          lineOpacity: 0.9));
-    }
-
-    void _onMapcreated(MapboxMapController controller) {
-      mapController = controller;
-    }
-
-    @override
-    void initState() {
-      super.initState();
-    }
-
     return Scaffold(
         body: SafeArea(
       child: Stack(
@@ -82,10 +116,14 @@ class _DetailMapPageState extends State<DetailMapPage> {
               accessToken: MAPBOX_APIKEY,
               initialCameraPosition: CameraPosition(
                 target: LatLng(widget.cLat!, widget.cLong!),
-                zoom: 11.6,
+                zoom: 14,
               ),
               onMapCreated: _onMapcreated,
               onStyleLoadedCallback: _setMarker,
+              annotationOrder: const <AnnotationType>[
+                AnnotationType.symbol,
+                AnnotationType.line,
+              ],
             ),
           ),
           Container(
