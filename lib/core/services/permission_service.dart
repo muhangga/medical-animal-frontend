@@ -4,6 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class PermissionService {
   Permission permission = Permission.location;
+  PermissionStatus? _permissionStatus;
 
   Future<void> checkPermission(BuildContext context) async {
     if (await permission.isGranted) {

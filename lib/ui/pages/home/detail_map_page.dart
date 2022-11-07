@@ -1,11 +1,10 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:medical_animal/core/common/constant.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:medical_animal/core/services/mapbox_directions.dart';
+import 'package:medical_animal/ui/pages/home/turn_navigation.dart';
 
 class DetailMapPage extends StatefulWidget {
   String? clinicName;
@@ -61,7 +60,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
         "lines",
         LineLayerProperties(
           lineColor: Colors.green.toHexStringRGB(),
-          lineWidth: 4.0,
+          lineWidth: 5.0,
           lineCap: "round",
           lineJoin: "round",
         ));
@@ -71,25 +70,16 @@ class _DetailMapPageState extends State<DetailMapPage> {
     mapController!.addSymbol(SymbolOptions(
       geometry: LatLng(widget.uLat!, widget.uLong!),
       iconImage: 'assets/ic_user2.png',
-      iconSize: 0.4,
+      iconSize: 0.3,
       zIndex: 99,
     ));
 
     mapController!.addSymbol(SymbolOptions(
       geometry: LatLng(widget.cLat!, widget.cLong!),
       iconImage: 'assets/ic_clinic.png',
-      iconSize: 0.4,
+      iconSize: 0.3,
       zIndex: 99,
     ));
-
-    mapController!.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(widget.uLat!, widget.uLong!),
-          zoom: 15,
-        ),
-      ),
-    );
 
     _directionsPolyline();
   }
@@ -116,7 +106,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
               accessToken: MAPBOX_APIKEY,
               initialCameraPosition: CameraPosition(
                 target: LatLng(widget.cLat!, widget.cLong!),
-                zoom: 14,
+                zoom: 11.0,
               ),
               onMapCreated: _onMapcreated,
               onStyleLoadedCallback: _setMarker,
@@ -138,6 +128,20 @@ class _DetailMapPageState extends State<DetailMapPage> {
               ),
             ),
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TurnNavigationPage(
+                        userLat: widget.uLat!,
+                        userLong: widget.uLong!,
+                        clinicLat: widget.cLat!,
+                        clinicLong: widget.cLong!),
+                  ),
+                );
+              },
+              child: const Text("Turn Navigation"))
         ],
       ),
     ));

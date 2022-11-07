@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="mapbox_access_token">sk.eyJ1IjoibXVoYW5nZ2EiLCJhIjoiY2xhNTJzYWZxMDN6azN3bGdrenpxdnc5cSJ9.du1sk1pJs6YtQT5wtq-pog</string>
+    <string name="app_name">Navigation map</string>
+    <string name="mapbox_access_token" translatable="false">sk.eyJ1IjoibXVoYW5nZ2EiLCJhIjoiY2xhNTJzYWZxMDN6azN3bGdrenpxdnc5cSJ9.du1sk1pJs6YtQT5wtq-pog</string>
+    <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
+    <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
 </resources>

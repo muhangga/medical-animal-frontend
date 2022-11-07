@@ -122,13 +122,11 @@ class _MapState extends State<MapPage> {
     });
   }
 
-
   @override
   void initState() {
     super.initState();
     checkPermission();
     getUserAndClinicLocation();
-
   }
 
   @override
