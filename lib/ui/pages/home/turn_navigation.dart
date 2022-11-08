@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mapbox_navigation/library.dart';
 
 class TurnNavigationPage extends StatefulWidget {
-  late double userLat;
-  late double userLong;
-  late double clinicLat;
-  late double clinicLong;
+  double? userLat;
+  double? userLong;
+  double? clinicLat;
+  double? clinicLong;
 
   TurnNavigationPage({
     Key? key,
@@ -20,11 +20,12 @@ class TurnNavigationPage extends StatefulWidget {
 }
 
 class _TurnNavigationPageState extends State<TurnNavigationPage> {
-  MapBoxNavigation? _directions;
-  MapBoxOptions? _options;
-
+  late MapBoxNavigation directions;
+  late double distanceRemaining;
+  late double durationRemaining;
   late WayPoint sourceWaypoint, destinationWaypoint;
-  late double distanceRemaining, durationRemaining;
+  late MapBoxNavigationViewController controller;
+  late MapBoxOptions _options;
 
   final bool isMultipleStop = false;
 
@@ -38,7 +39,7 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
   Future<void> initialize() async {
     if (!mounted) return;
 
-    _directions = MapBoxNavigation(onRouteEvent: _onRouteEvent);
+    directions = MapBoxNavigation(onRouteEvent: _onRouteEvent);
     _options = MapBoxOptions(
       zoom: 18,
       voiceInstructionsEnabled: true,
@@ -46,7 +47,7 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
       mode: MapBoxNavigationMode.drivingWithTraffic,
       isOptimized: true,
       units: VoiceUnits.metric,
-      language: "en",
+      language: "id",
       simulateRoute: true,
     );
 
@@ -61,13 +62,12 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
     wayPoints.add(sourceWaypoint);
     wayPoints.add(destinationWaypoint);
 
-    await _directions!
-        .startNavigation(wayPoints: wayPoints, options: _options!);
+    await directions.startNavigation(wayPoints: wayPoints, options: _options);
   }
 
   Future<void> _onRouteEvent(event) async {
-    distanceRemaining = await _directions!.distanceRemaining;
-    durationRemaining = await _directions!.durationRemaining;
+    distanceRemaining = await controller.distanceRemaining;
+    durationRemaining = await controller.durationRemaining;
 
     switch (event.eventType) {
       case MapBoxEvent.progress_change:
@@ -98,7 +98,7 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
 
         if (!isMultipleStop) {
           await Future.delayed(const Duration(seconds: 3));
-          await _directions!.finishNavigation();
+          await controller.finishNavigation();
         } else {}
         break;
       default:
