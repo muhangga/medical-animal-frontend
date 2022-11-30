@@ -66,7 +66,8 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
   }
 
   Future<void> _onRouteEvent(event) async {
-    distanceRemaining = await controller.distanceRemaining;
+    distanceRemaining = await 
+    controller.distanceRemaining;
     durationRemaining = await controller.durationRemaining;
 
     switch (event.eventType) {

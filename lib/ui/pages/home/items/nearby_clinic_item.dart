@@ -89,7 +89,6 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
           Expanded(
             child: Container(
               height: MediaQuery.of(context).size.height * 0.9,
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
               margin: const EdgeInsets.only(top: 20, bottom: 60),
               child: ListView.builder(
                 itemCount: nearbyClinic.length,
@@ -113,6 +112,15 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
                                         _currentPosition!.longitude.toString(),
                                     cLat: nearbyClinic[index].latitude,
                                     cLong: nearbyClinic[index].longitude,
+                                    wednesday: nearbyClinic[index]
+                                        .wednesday
+                                        .toString(),
+                                    thursday: nearbyClinic[index].thursday,
+                                    friday: nearbyClinic[index].friday,
+                                    saturday: nearbyClinic[index].saturday,
+                                    sunday: nearbyClinic[index].sunday,
+                                    monday: nearbyClinic[index].monday,
+                                    tuesday: nearbyClinic[index].tuesday,
                                     distance: nearbyClinic[index].distance,
                                   )));
                     },

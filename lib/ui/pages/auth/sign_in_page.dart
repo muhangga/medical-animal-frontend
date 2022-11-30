@@ -121,10 +121,8 @@ class _SignInPageState extends State<SignInPage> {
                       primary: kSecondaryColor,
                     ),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MainPage()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MainPage()));
                     },
                     child: Text(
                       "Masuk",

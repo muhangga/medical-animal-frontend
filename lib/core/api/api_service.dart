@@ -8,11 +8,14 @@ class ApiService {
   Future<List<ClinicModel>> getClinic() async {
     try {
       var url = baseURL + 'clinics';
-      var response = await http.get(Uri.parse(url));
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Charset': 'utf-8'
+      });
 
       if (response.statusCode == 200) {
         var responseJson = json.decode(response.body)["data"];
-        // print(responseJson);
+        print(responseJson);
         return (responseJson as List)
             .map((data) => ClinicModel.fromJson(data))
             .toList();
@@ -20,14 +23,14 @@ class ApiService {
         throw Exception('Failed to load post');
       }
     } catch (e) {
-      throw Exception("Something went wrong");
+      print(e);
+      throw Exception('Failed to load post');
     }
   }
 
   Future<List<ClinicModel>> nearClinic(
       double? userLat, double? userLong) async {
-    var url =
-        baseURL + "near-clinics?latitude=$userLat&longitude=$userLong";
+    var url = baseURL + "near-clinics?latitude=$userLat&longitude=$userLong";
     try {
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -45,8 +48,8 @@ class ApiService {
     }
   }
 
-  Future<List<ClinicModel>> nearClinicById(double? userLat, double? userLong,
-      int? clinicId) async {
+  Future<List<ClinicModel>> nearClinicById(
+      double? userLat, double? userLong, int? clinicId) async {
     var url =
         baseURL + "near-clinic/$clinicId?latitude=$userLat&longitude=$userLong";
     try {

@@ -14,6 +14,13 @@ class DetailPage extends StatefulWidget {
   String? uLong;
   double? cLat;
   double? cLong;
+  String? wednesday;
+  String? thursday;
+  String? friday;
+  String? saturday;
+  String? sunday;
+  String? monday;
+  String? tuesday;
   double? distance;
   DetailPage(
       {Key? key,
@@ -24,6 +31,13 @@ class DetailPage extends StatefulWidget {
       this.uLong,
       this.cLat,
       this.cLong,
+      this.wednesday,
+      this.thursday,
+      this.friday,
+      this.saturday,
+      this.sunday,
+      this.monday,
+      this.tuesday,
       this.distance})
       : super(key: key);
 

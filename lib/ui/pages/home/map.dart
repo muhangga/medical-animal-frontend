@@ -1,8 +1,4 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:medical_animal/core/api/api_service.dart';
@@ -15,7 +11,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:medical_animal/core/common/theme.dart';
 
 import 'detail_map_page.dart';
-import 'detail_page.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);

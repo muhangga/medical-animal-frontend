@@ -1,9 +1,5 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -55,6 +51,4 @@ class MapService {
 
     await launchUrl(Uri.parse(path));
   }
-
-  
 }

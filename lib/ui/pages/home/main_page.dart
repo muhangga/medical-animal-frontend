@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:medical_animal/core/common/theme.dart';
@@ -7,10 +8,9 @@ import 'package:medical_animal/core/services/permission_service.dart';
 import 'package:medical_animal/ui/pages/home/home_page.dart';
 import 'package:medical_animal/ui/pages/home/list_klinik_page.dart';
 import 'package:medical_animal/ui/pages/home/map.dart';
-import 'package:medical_animal/ui/pages/home/map_near_clinics.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  MainPage({Key? key}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -22,6 +22,16 @@ class _MainPageState extends State<MainPage> {
 
   MapService mapService = MapService();
   PermissionService permissionService = PermissionService();
+  Position? _currentPosition;
+
+  void _getUserPosition() async {
+    mapService.getGeoLocationPosition().then((value) {
+      if (!mounted) return;
+      setState(() {
+        _currentPosition = value;
+      });
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -32,9 +42,16 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    pageController!.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
-    mapService.getGeoLocationPosition();
+    _getUserPosition();
     pageController = PageController(initialPage: bottomNavbarIndex);
     permissionService.checkPermission(context);
   }
@@ -59,7 +76,7 @@ class _MainPageState extends State<MainPage> {
                 bottomNavbarIndex = index;
               });
             },
-            children: const [
+            children: [
               HomePage(),
               ListKlinikPage(),
             ],
