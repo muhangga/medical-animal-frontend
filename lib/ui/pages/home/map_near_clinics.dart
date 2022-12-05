@@ -11,7 +11,7 @@ import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/map_service.dart';
-import 'package:medical_animal/ui/pages/home/detail_page.dart';
+import 'package:medical_animal/ui/pages/home/detail_map_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MapNearClinics extends StatefulWidget {
@@ -315,14 +315,24 @@ class _MapNearClinicsState extends State<MapNearClinics> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DetailPage(
+                            builder: (context) => DetailMapPage(
                                   clinicName: listClinic[index].clinicName,
                                   address: listClinic[index].address,
                                   phone: listClinic[index].phoneNumber,
-                                  uLat: _currentLocation!.latitude.toString(),
-                                  uLong: _currentLocation!.longitude.toString(),
+                                  uLat: _currentLocation!.latitude,
+                                  uLong: _currentLocation!.longitude,
                                   cLat: listClinic[index].latitude,
                                   cLong: listClinic[index].longitude,
+                                  rating: listClinic[index].rating,
+                                  reviews: listClinic[index].reviews,
+                                  website: listClinic[index].website,
+                                  wednesday: listClinic[index].wednesday,
+                                  thursday: listClinic[index].thursday,
+                                  friday: listClinic[index].friday,
+                                  saturday: listClinic[index].saturday,
+                                  sunday: listClinic[index].sunday,
+                                  monday: listClinic[index].monday,
+                                  tuesday: listClinic[index].tuesday,
                                   distance: listClinic[index].distance,
                                 )));
                   },

@@ -99,10 +99,12 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
                                     address: nearbyClinic[index].address,
                                     phone: nearbyClinic[index].phoneNumber,
                                     uLat: _currentPosition!.latitude,
-                                    uLong:
-                                        _currentPosition!.longitude,
+                                    uLong: _currentPosition!.longitude,
                                     cLat: nearbyClinic[index].latitude,
                                     cLong: nearbyClinic[index].longitude,
+                                    rating: nearbyClinic[index].rating,
+                                    website: nearbyClinic[index].website,
+                                    reviews: nearbyClinic[index].reviews,
                                     wednesday: nearbyClinic[index]
                                         .wednesday
                                         .toString(),

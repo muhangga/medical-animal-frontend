@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:medical_animal/core/api/api_service.dart';
@@ -31,6 +36,8 @@ class _MapState extends State<MapPage> {
   MapService mapService = MapService();
   MapboxService mapboxService = MapboxService();
   LocationPermission? permission;
+
+  
 
   Future<void> _getUserPosition() async {
     await Geolocator.getCurrentPosition(
@@ -249,10 +256,20 @@ class _MapState extends State<MapPage> {
                                   clinicName: listClinic[index].clinicName,
                                   address: listClinic[index].address,
                                   phone: listClinic[index].phoneNumber,
-                                  uLat: _currentPosition!.latitude,
-                                  uLong: _currentPosition!.longitude,
+                                  uLat: _currentLocation!.latitude,
+                                  uLong: _currentLocation!.longitude,
                                   cLat: listClinic[index].latitude,
                                   cLong: listClinic[index].longitude,
+                                  rating: listClinic[index].rating,
+                                  reviews: listClinic[index].reviews,
+                                  website: listClinic[index].website,
+                                  wednesday: listClinic[index].wednesday,
+                                  thursday: listClinic[index].thursday,
+                                  friday: listClinic[index].friday,
+                                  saturday: listClinic[index].saturday,
+                                  sunday: listClinic[index].sunday,
+                                  monday: listClinic[index].monday,
+                                  tuesday: listClinic[index].tuesday,
                                   distance: listClinic[index].distance,
                                 )));
                   },
