@@ -16,15 +16,19 @@ class ApiService {
       if (response.statusCode == 200) {
         var responseJson = json.decode(response.body)["data"];
         print(responseJson);
-        return (responseJson as List)
-            .map((data) => ClinicModel.fromJson(data))
-            .toList();
+        if (responseJson != null) {
+          return (responseJson as List)
+              .map((p) => ClinicModel.fromJson(p))
+              .toList();
+        } else {
+          return [];
+        }
       } else {
-        throw Exception('Failed to load post');
+        return [];
       }
     } catch (e) {
       print(e);
-      throw Exception('Failed to load post');
+      return [];
     }
   }
 

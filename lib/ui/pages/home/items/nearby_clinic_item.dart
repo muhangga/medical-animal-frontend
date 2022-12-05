@@ -6,6 +6,8 @@ import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/map_service.dart';
+import 'package:medical_animal/core/services/permission_service.dart';
+import 'package:medical_animal/ui/pages/home/detail_map_page.dart';
 import 'package:medical_animal/ui/pages/home/detail_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,21 +26,10 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
   Permission permission = Permission.location;
 
   ApiService apiService = ApiService();
-
   MapService mapService = MapService();
+  PermissionService permissionService = PermissionService();
 
   ConnectionState? _connectionState;
-
-  void checkPermission() async {
-    if (await permission.isGranted) {
-      print('permission granted');
-    }
-
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-    ].request();
-    print(statuses[Permission.location]);
-  }
 
   Future<void> _getUserPosition() async {
     await Geolocator.getCurrentPosition(
@@ -77,7 +68,7 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
   @override
   void initState() {
     super.initState();
-    checkPermission();
+    permissionService.checkPermissionUser();
     print(getUserAndNearClinicLocation());
   }
 
@@ -103,13 +94,13 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DetailPage(
+                              builder: (context) => DetailMapPage(
                                     clinicName: nearbyClinic[index].clinicName,
                                     address: nearbyClinic[index].address,
                                     phone: nearbyClinic[index].phoneNumber,
-                                    uLat: _currentPosition!.latitude.toString(),
+                                    uLat: _currentPosition!.latitude,
                                     uLong:
-                                        _currentPosition!.longitude.toString(),
+                                        _currentPosition!.longitude,
                                     cLat: nearbyClinic[index].latitude,
                                     cLong: nearbyClinic[index].longitude,
                                     wednesday: nearbyClinic[index]

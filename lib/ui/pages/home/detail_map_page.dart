@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:medical_animal/core/common/constant.dart';
+import 'package:medical_animal/core/common/theme.dart';
 
 import 'package:medical_animal/core/services/mapbox_directions.dart';
 import 'package:medical_animal/ui/pages/home/turn_navigation.dart';
@@ -14,6 +14,13 @@ class DetailMapPage extends StatefulWidget {
   double? uLong;
   double? cLat;
   double? cLong;
+  String? wednesday;
+  String? thursday;
+  String? friday;
+  String? saturday;
+  String? sunday;
+  String? monday;
+  String? tuesday;
   double? distance;
   DetailMapPage(
       {Key? key,
@@ -24,6 +31,13 @@ class DetailMapPage extends StatefulWidget {
       this.uLong,
       this.cLat,
       this.cLong,
+      this.wednesday,
+      this.thursday,
+      this.friday,
+      this.saturday,
+      this.sunday,
+      this.monday,
+      this.tuesday,
       this.distance})
       : super(key: key);
 
@@ -128,20 +142,23 @@ class _DetailMapPageState extends State<DetailMapPage> {
               ),
             ),
           ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TurnNavigationPage(
-                        userLat: widget.uLat!,
-                        userLong: widget.uLong!,
-                        clinicLat: widget.cLat!,
-                        clinicLong: widget.cLong!),
-                  ),
-                );
-              },
-              child: const Text("Turn Navigation"))
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+            margin: const EdgeInsets.only(top: 400),
+            color: kWhiteColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.clinicName!,
+                    style: blackTextStyle.copyWith(
+                        fontSize: 18, fontWeight: bold)),
+                SizedBox(height: 5),
+                Text(widget.address!,
+                    style: greyTextStyle.copyWith(fontSize: 14)),
+              ],
+            ),
+          )
         ],
       ),
     ));

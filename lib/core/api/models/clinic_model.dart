@@ -56,5 +56,28 @@ class ClinicModel {
     saturday = json['saturday'] ?? '';
     sunday = json['sunday'] ?? '';
     monday = json['monday'] ?? '';
-    tuesday = json['tuesday'] ?? '';}
+    tuesday = json['tuesday'] ?? '';
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = id;
+    data['clinic_name'] = clinicName;
+    data['address'] = address;
+    data['phone_number'] = phoneNumber;
+    data['rating'] = rating;
+    data['reviews'] = reviews;
+    data['website'] = website;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['distance'] = distance;
+    data['wednesday'] = wednesday;
+    data['thursday'] = thursday;
+    data['friday'] = friday;
+    data['saturday'] = saturday;
+    data['sunday'] = sunday;
+    data['monday'] = monday;
+    data['tuesday'] = tuesday;
+    return data;
+  }
 }

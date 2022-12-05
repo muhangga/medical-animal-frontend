@@ -24,4 +24,16 @@ class PermissionService {
       print(statuses[Permission.location]);
     }
   }
+
+  void checkPermissionUser() async {
+    if (await permission.isGranted) {
+      print('permission granted');
+    }
+
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+    ].request();
+    print(statuses[Permission.location]);
+  }
+
 }
