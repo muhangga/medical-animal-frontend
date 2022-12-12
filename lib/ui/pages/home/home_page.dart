@@ -69,59 +69,46 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               width: double.infinity,
-              height: 120,
+              height: 130,
               decoration: const BoxDecoration(
                 color: kSecondaryColor,
               ),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      margin: const EdgeInsets.only(right: 5),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: kGreyColor,
-                          width: 2,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15, left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Pencarian Klinik Hewan",
+                              style: whiteTextStyle.copyWith(
+                                  fontSize: 20, fontWeight: semiBold),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              "Cari Klinik Hewan terdekat!",
+                              style: greyTextStyle.copyWith(
+                                  fontSize: 14, fontWeight: medium),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Image.asset(
-                        "assets/user_pic.png",
-                        width: 70,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Halo,",
-                            style: whiteTextStyle.copyWith(
-                                fontSize: 20, fontWeight: semiBold),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "Muhamad Angga",
-                            style: whiteTextStyle.copyWith(
-                                fontSize: 18, fontWeight: medium),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(left: 24, top: 30),
-              child: Text(
-                "Klinik Hewan",
-                style: blackTextStyle.copyWith(fontSize: 24, fontWeight: bold),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 30, left: 20),
+              child: Text("Lokasi Anda",
+                  style: blackTextStyle.copyWith(
+                      fontSize: 20, fontWeight: semiBold)),
             ),
             const Center(
               child: Padding(

@@ -12,7 +12,6 @@ import 'package:medical_animal/core/common/constant.dart';
 import 'package:medical_animal/core/services/map_service.dart';
 import 'package:medical_animal/core/services/mapbox_directions.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:medical_animal/core/common/theme.dart';
 
 import 'detail_map_page.dart';
@@ -36,8 +35,6 @@ class _MapState extends State<MapPage> {
   MapService mapService = MapService();
   MapboxService mapboxService = MapboxService();
   LocationPermission? permission;
-
-  
 
   Future<void> _getUserPosition() async {
     await Geolocator.getCurrentPosition(
@@ -90,7 +87,9 @@ class _MapState extends State<MapPage> {
 
   Future<void> getUserAndClinicLocation() async {
     await _getUserPosition();
-    await _getNearClinicLocation();
+    Future.delayed(const Duration(seconds: 4), () {
+      _getNearClinicLocation();
+    });
   }
 
   void checkPermission() async {
@@ -239,6 +238,7 @@ class _MapState extends State<MapPage> {
                     fontSize: 15,
                     fontWeight: bold,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(
                   "Jarak : ${listClinic[index].distance?.toStringAsFixed(4)} km",
@@ -263,13 +263,16 @@ class _MapState extends State<MapPage> {
                                   rating: listClinic[index].rating,
                                   reviews: listClinic[index].reviews,
                                   website: listClinic[index].website,
-                                  wednesday: listClinic[index].wednesday,
-                                  thursday: listClinic[index].thursday,
-                                  friday: listClinic[index].friday,
-                                  saturday: listClinic[index].saturday,
-                                  sunday: listClinic[index].sunday,
-                                  monday: listClinic[index].monday,
-                                  tuesday: listClinic[index].tuesday,
+                                  wednesday:
+                                      listClinic[index].wednesday.toString(),
+                                  thursday:
+                                      listClinic[index].thursday.toString(),
+                                  friday: listClinic[index].friday.toString(),
+                                  saturday:
+                                      listClinic[index].saturday.toString(),
+                                  sunday: listClinic[index].sunday.toString(),
+                                  monday: listClinic[index].monday.toString(),
+                                  tuesday: listClinic[index].tuesday.toString(),
                                   distance: listClinic[index].distance,
                                 )));
                   },

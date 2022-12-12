@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:medical_animal/core/api/api_service.dart';
+import 'package:medical_animal/core/api/models/route_model.dart';
 import 'package:medical_animal/core/common/constant.dart';
 import 'package:medical_animal/core/common/theme.dart';
 
 import 'package:medical_animal/core/services/mapbox_directions.dart';
 import 'package:medical_animal/ui/pages/home/turn_navigation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailMapPage extends StatefulWidget {
   String? clinicName;
@@ -54,6 +57,10 @@ class DetailMapPage extends StatefulWidget {
 class _DetailMapPageState extends State<DetailMapPage> {
   MapboxMapController? mapController;
   MapboxService mapboxService = MapboxService();
+
+  ApiService apiService = ApiService();
+
+  List<RouteModel> routeModelList = [];
 
   void _directionsPolyline() async {
     final _directions = await mapboxService.getDirectionAPIResponse(
@@ -108,45 +115,58 @@ class _DetailMapPageState extends State<DetailMapPage> {
     mapController = controller;
   }
 
-  // ambil kalimat ke-2 dari widget monday, wednesday ...
-  String _getDay(String? day) {
-    if (day == null) {
-      return '';
-    }
-    return day.split(',')[1];
-  }
-
-  // check today is open or close
-  String _checkToday() {
+  _checkToday() {
     String today = DateTime.now().weekday.toString();
 
     if (today == '1') {
-      return _getDay(widget.monday);
+      return widget.monday;
     } else if (today == '2') {
-      return _getDay(widget.tuesday);
+      return widget.tuesday;
     } else if (today == '3') {
-      return _getDay(widget.wednesday);
+      return widget.wednesday;
     } else if (today == '4') {
-      return _getDay(widget.thursday);
+      return widget.thursday;
     } else if (today == '5') {
-      return _getDay(widget.friday);
+      return widget.friday;
     } else if (today == '6') {
-      return _getDay(widget.saturday);
+      return widget.saturday;
     } else if (today == '7') {
-      return _getDay(widget.sunday);
+      return widget.sunday;
     } else {
       return '';
     }
   }
 
-  // check is open or close
-  bool _isOpen() {
-    String today = _checkToday();
-    if (today == 'Closed') {
-      return false;
-    } else {
-      return true;
+  // void _getRouteFromAPI() async {
+  //   final response = await apiService.getRoute(
+  //       widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!);
+
+  //   if (response != null) {
+  //     setState(() {
+  //       routeModelList = response;
+  //     });
+  //   }
+
+  //   // print(routeModelList);
+  // }
+
+  Future<RouteModel> _getRouteFromAPI() async {
+    final response = await apiService.getRoute(
+        widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!);
+
+    if (response != null) {
+      setState(() {
+        routeModelList = response;
+      });
     }
+
+    return routeModelList[0];
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -154,7 +174,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
     super.initState();
 
     print(_checkToday());
-    print(_isOpen());
+    _getRouteFromAPI();
   }
 
   @override
@@ -166,7 +186,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
             children: [
               _whiteBoxInformation(context),
               Container(
-                height: MediaQuery.of(context).size.height * 0.59,
+                height: MediaQuery.of(context).size.height * 0.5,
                 width: double.infinity,
                 child: MapboxMap(
                   accessToken: MAPBOX_APIKEY,
@@ -212,7 +232,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
       child: Container(
         width: double.infinity,
         padding:
-            const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
+            const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 30),
         margin: const EdgeInsets.only(top: 400),
         decoration: const BoxDecoration(
           color: kWhiteColor,
@@ -234,13 +254,9 @@ class _DetailMapPageState extends State<DetailMapPage> {
                   children: [
                     const Icon(Icons.access_alarms_rounded, color: kMainColor),
                     const SizedBox(width: 5),
-                    _isOpen() == true
-                        ? Text('Open Now - ' + _checkToday(),
-                            style: blackTextStyle.copyWith(
-                                fontSize: 14, fontWeight: medium))
-                        : Text('Closed',
-                            style: redTextStyle.copyWith(
-                                fontSize: 14, fontWeight: medium)),
+                    Text(_checkToday(),
+                        style: blackTextStyle.copyWith(
+                            fontSize: 14, fontWeight: medium)),
                   ],
                 ),
                 widget.distance != null
@@ -270,7 +286,15 @@ class _DetailMapPageState extends State<DetailMapPage> {
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      Uri phoneNumber = Uri.parse("tel:${widget.phone}");
+
+                      if (await launchUrl(phoneNumber)) {
+                        print("success");
+                      } else {
+                        // TODO :: show error with alert dialog
+                      }
+                    },
                     icon: const Icon(
                       Icons.phone,
                       color: kWhiteColor,
@@ -303,7 +327,15 @@ class _DetailMapPageState extends State<DetailMapPage> {
                   ),
                 ),
               ],
-            )
+            ),
+            const SizedBox(height: 20),
+            // TODO:: add some route
+            // ListView.builder(
+            //   itemCount: routeModelList.length,
+            //   itemBuilder: (context, index) {
+            //     return Text(routeModelList[index].routes)
+
+            // })
           ],
         ),
       ),
@@ -358,20 +390,20 @@ class _DetailMapPageState extends State<DetailMapPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // Column(
+        //   children: [
+        //     Text("Ruang Periksa", style: blackTextStyle),
+        //     const SizedBox(height: 5),
+        //     const Icon(
+        //       Icons.check_circle,
+        //       color: kMainColor,
+        //       size: 20,
+        //     ),
+        //   ],
+        // ),
         Column(
           children: [
-            Text("Ruang Periksa", style: blackTextStyle),
-            const SizedBox(height: 5),
-            const Icon(
-              Icons.check_circle,
-              color: kMainColor,
-              size: 20,
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Text("Ruang Periksa", style: blackTextStyle),
+            Text("Layanan Medis", style: blackTextStyle),
             const SizedBox(height: 5),
             const Icon(
               Icons.check_circle,
@@ -405,4 +437,24 @@ class _DetailMapPageState extends State<DetailMapPage> {
       ],
     );
   }
+
+  // _showDialogRoute() async {
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text("Show route"),
+  //           content: ListView.builder(
+  //               shrinkWrap: true,
+  //               itemCount: routeModelList.length,
+  //               itemBuilder: (context, index) {
+  //                 return Text(routeModelList[index]
+  //                     .routes![0]
+  //                     .legs![0]
+  //                     .steps![0].maneuver['instruction'].toString());
+  //               }),
+  //         );
+  //       });
+  // }
 }

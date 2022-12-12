@@ -100,10 +100,8 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    // return const MapNearClinics();
-                    return const MapPage();
-                  }));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (builder) => const MapPage()));
                 },
               ),
             ),

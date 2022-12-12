@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mapbox_navigation/library.dart';
+import 'package:medical_animal/ui/pages/home/main_page.dart';
 
 class TurnNavigationPage extends StatefulWidget {
   double? userLat;
@@ -41,7 +42,7 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
 
     directions = MapBoxNavigation(onRouteEvent: _onRouteEvent);
     _options = MapBoxOptions(
-      zoom: 18,
+      zoom: 16,
       voiceInstructionsEnabled: true,
       bannerInstructionsEnabled: true,
       mode: MapBoxNavigationMode.drivingWithTraffic,
@@ -65,14 +66,34 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
     await directions.startNavigation(wayPoints: wayPoints, options: _options);
   }
 
-  Future<void> _onRouteEvent(event) async {
-    distanceRemaining = await 
-    controller.distanceRemaining;
-    durationRemaining = await controller.durationRemaining;
+  Future<void> _onRouteEvent(e) async {
+    distanceRemaining = await directions.distanceRemaining;
+    durationRemaining = await directions.durationRemaining;
 
-    switch (event.eventType) {
+    //   if (!mounted) return;
+
+    //   if (e.eventType == MapBoxEvent.progress_change) {
+    //     distanceRemaining = e.data["distanceRemaining"];
+    //     durationRemaining = e.data["durationRemaining"];
+    //     instruction = e.data["currentLegProgress"]["currentStep"]["instructions"];
+    //     isArrived = e.data["arrived"];
+    //     isNavigationRunning = e.data["navigationRunning"];
+    //     routeBuilt = e.data["routeBuilt"];
+    //   }
+
+    //   if (isArrived) {
+    //     await controller.finishNavigation();
+    //     Navigator.pushReplacement(
+    //         context, MaterialPageRoute(builder: (context) => MainPage()));
+    //   }
+
+    //   setState(() {});
+    //   print("Event: $e");
+    // }
+
+    switch (e.eventType) {
       case MapBoxEvent.progress_change:
-        var progressEvent = event.data as RouteProgressEvent;
+        var progressEvent = e.data as RouteProgressEvent;
         isArrived = progressEvent.arrived!;
 
         if (progressEvent.currentStepInstruction != null) {
@@ -82,17 +103,21 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
       case MapBoxEvent.route_building:
       case MapBoxEvent.route_built:
         routeBuilt = true;
+
         break;
       case MapBoxEvent.route_build_failed:
         routeBuilt = false;
         break;
       case MapBoxEvent.navigation_running:
         isNavigationRunning = true;
+
         break;
       case MapBoxEvent.navigation_finished:
-      case MapBoxEvent.navigation_cancelled:
         isNavigationRunning = false;
+        break;
+      case MapBoxEvent.navigation_cancelled:
         routeBuilt = false;
+        isNavigationRunning = false;
         break;
       case MapBoxEvent.on_arrival:
         isArrived = true;
@@ -117,6 +142,15 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return WillPopScope(
+      onWillPop: () async {
+        if (isNavigationRunning && !isArrived) {
+          await controller.finishNavigation();
+        }
+
+        return true;
+      },
+      child: MainPage(),
+    );
   }
 }

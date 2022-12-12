@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:medical_animal/core/common/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MapService {
@@ -50,5 +51,15 @@ class MapService {
     }
 
     await launchUrl(Uri.parse(path));
+  }
+
+  Future<void> lauchUrlMap(double lat, double long) async {
+    String url =
+        'https://www.google.com/maps/search/?api=$GOOGLEMAPS_APIKEY&query=$lat,$long';
+    if (!await launchUrl(Uri.parse(url))) {
+      throw 'Could not launch $url';
+    }
+
+    await launchUrl(Uri.parse(url));
   }
 }

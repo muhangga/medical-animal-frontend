@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,15 +28,32 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' /> -->
+
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
+
+
+  <style>
+    .mapboxgl-map {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 
   <title>medical_animal</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <div id='map' style='width: 400px; height: 300px;'></div>
   <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
@@ -99,6 +117,15 @@
       // Service workers not supported. Just drop the <script> tag.
       loadMainDartJs();
     }
+
+    MapboxGL.accessToken = 'sk.eyJ1IjoibXVoYW5nZ2EiLCJhIjoiY2xhNTJzYWZxMDN6azN3bGdrenpxdnc5cSJ9.du1sk1pJs6YtQT5wtq-pog';
+    const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      style: 'mapbox://styles/mapbox/streets-v12', // style URL
+      center: [-74.5, 40], // starting position [lng, lat]
+      zoom: 9, // starting zoom
+    });
   </script>
 </body>
+
 </html>
