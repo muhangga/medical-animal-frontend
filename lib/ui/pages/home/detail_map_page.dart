@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/api/models/route_model.dart';
+import 'package:medical_animal/core/api/models/route_navigation_model.dart';
 import 'package:medical_animal/core/common/constant.dart';
 import 'package:medical_animal/core/common/theme.dart';
 
@@ -61,6 +65,9 @@ class _DetailMapPageState extends State<DetailMapPage> {
   ApiService apiService = ApiService();
 
   List<RouteModel> routeModelList = [];
+  late List<RouteNavigationModel> routeNavigationModelList = [];
+
+  RouteModel routeModel = RouteModel();
 
   void _directionsPolyline() async {
     final _directions = await mapboxService.getDirectionAPIResponse(
@@ -137,44 +144,23 @@ class _DetailMapPageState extends State<DetailMapPage> {
     }
   }
 
-  // void _getRouteFromAPI() async {
-  //   final response = await apiService.getRoute(
-  //       widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!);
+  // void _getDataRoute() async {
+  //   routeNavigationModelList = await apiService.getRouteAPI(
+  //       widget.uLat, widget.uLong, widget.cLat, widget.cLong);
 
-  //   if (response != null) {
-  //     setState(() {
-  //       routeModelList = response;
-  //     });
-  //   }
+  //   print(routeNavigationModelList);
 
-  //   // print(routeModelList);
+  //   Future.delayed(const Duration(seconds: 1)).then((value) {
+  //     setState(() {});
+  //   });
   // }
-
-  Future<RouteModel> _getRouteFromAPI() async {
-    final response = await apiService.getRoute(
-        widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!);
-
-    if (response != null) {
-      setState(() {
-        routeModelList = response;
-      });
-    }
-
-    return routeModelList[0];
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 
   @override
   void initState() {
     super.initState();
-
-    print(_checkToday());
-    _getRouteFromAPI();
+    // _getRouteFromAPI();
+    // _getRoute();
+    // _getDataRoute();
   }
 
   @override
@@ -330,12 +316,29 @@ class _DetailMapPageState extends State<DetailMapPage> {
             ),
             const SizedBox(height: 20),
             // TODO:: add some route
-            // ListView.builder(
-            //   itemCount: routeModelList.length,
-            //   itemBuilder: (context, index) {
-            //     return Text(routeModelList[index].routes)
-
-            // })
+            Container(
+              width: double.infinity,
+              height: 300,
+              child: FutureBuilder<RouteNavigationModel>(
+                future: apiService.getRouteAPI(
+                    widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount:
+                          snapshot.data!.routes![0].legs?[0].steps?.length,
+                      itemBuilder: (context, index) {
+                        return Text(snapshot.data!.routes![0].legs![0]
+                            .steps![index].manuever!.instruction
+                            .toString());
+                      },
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),

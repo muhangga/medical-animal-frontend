@@ -17,16 +17,23 @@ class RouteModel {
   final List<Route>? routes;
 
   factory RouteModel.fromJson(Map<String, dynamic> json) => RouteModel(
-        routes: json["routes"] == null
-            ? null
-            : List<Route>.from(json["routes"].map((x) => Route.fromJson(x))),
-      );
+      routes: json["routes"] != null
+          ? List<Route>.from(json["routes"].map((x) => Route.fromJson(x)))
+              .toList()
+          : null);
 
   Map<String, dynamic> toJson() => {
         "routes": routes == null
             ? null
             : List<dynamic>.from(routes!.map((x) => x.toJson())),
       };
+
+  @override
+  String toString() {
+    // TODO: implement toString
+
+    return "RouteModel{routes: $routes}";
+  }
 }
 
 class Route {
