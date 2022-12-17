@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -68,6 +69,8 @@ class _DetailMapPageState extends State<DetailMapPage> {
   late List<RouteNavigationModel> routeNavigationModelList = [];
 
   RouteModel routeModel = RouteModel();
+
+  int? index = 0;
 
   void _directionsPolyline() async {
     final _directions = await mapboxService.getDirectionAPIResponse(
@@ -144,25 +147,6 @@ class _DetailMapPageState extends State<DetailMapPage> {
     }
   }
 
-  // void _getDataRoute() async {
-  //   routeNavigationModelList = await apiService.getRouteAPI(
-  //       widget.uLat, widget.uLong, widget.cLat, widget.cLong);
-
-  //   print(routeNavigationModelList);
-
-  //   Future.delayed(const Duration(seconds: 1)).then((value) {
-  //     setState(() {});
-  //   });
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    // _getRouteFromAPI();
-    // _getRoute();
-    // _getDataRoute();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -206,12 +190,25 @@ class _DetailMapPageState extends State<DetailMapPage> {
                   ),
                 ),
               ),
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 10, bottom: 20),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor:
+                              MaterialStateProperty.all(kRedColor)),
+                      onPressed: _showDialogRoute,
+                      child: Text("Show Route"),
+                    ),
+                  ))
             ],
           ),
         ));
   }
 
-  SingleChildScrollView _whiteBoxInformation(BuildContext context) {
+  Widget _whiteBoxInformation(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       controller: ScrollController(),
@@ -219,7 +216,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
         width: double.infinity,
         padding:
             const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 30),
-        margin: const EdgeInsets.only(top: 400),
+        margin: const EdgeInsets.only(top: 370),
         decoration: const BoxDecoration(
           color: kWhiteColor,
           borderRadius: BorderRadius.only(
@@ -315,37 +312,13 @@ class _DetailMapPageState extends State<DetailMapPage> {
               ],
             ),
             const SizedBox(height: 20),
-            // TODO:: add some route
-            Container(
-              width: double.infinity,
-              height: 300,
-              child: FutureBuilder<RouteNavigationModel>(
-                future: apiService.getRouteAPI(
-                    widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount:
-                          snapshot.data!.routes![0].legs?[0].steps?.length,
-                      itemBuilder: (context, index) {
-                        return Text(snapshot.data!.routes![0].legs![0]
-                            .steps![index].manuever!.instruction
-                            .toString());
-                      },
-                    );
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
-            ),
           ],
         ),
       ),
     );
   }
 
-  Row _informationWidgets() {
+  Widget _informationWidgets() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -389,21 +362,21 @@ class _DetailMapPageState extends State<DetailMapPage> {
     );
   }
 
-  Row _facilitiesWidget() {
+  Widget _facilitiesWidget() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Column(
-        //   children: [
-        //     Text("Ruang Periksa", style: blackTextStyle),
-        //     const SizedBox(height: 5),
-        //     const Icon(
-        //       Icons.check_circle,
-        //       color: kMainColor,
-        //       size: 20,
-        //     ),
-        //   ],
-        // ),
+        Column(
+          children: [
+            Text("Ruang Periksa", style: blackTextStyle),
+            const SizedBox(height: 5),
+            const Icon(
+              Icons.check_circle,
+              color: kMainColor,
+              size: 20,
+            ),
+          ],
+        ),
         Column(
           children: [
             Text("Layanan Medis", style: blackTextStyle),
@@ -441,23 +414,56 @@ class _DetailMapPageState extends State<DetailMapPage> {
     );
   }
 
-  // _showDialogRoute() async {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text("Show route"),
-  //           content: ListView.builder(
-  //               shrinkWrap: true,
-  //               itemCount: routeModelList.length,
-  //               itemBuilder: (context, index) {
-  //                 return Text(routeModelList[index]
-  //                     .routes![0]
-  //                     .legs![0]
-  //                     .steps![0].maneuver['instruction'].toString());
-  //               }),
-  //         );
-  //       });
-  // }
+  _showDialogRoute() async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Rute Perjalanan",
+              style: redTextStyle.copyWith(fontSize: 24, fontWeight: bold),
+            ),
+            content: SizedBox(
+              width: double.maxFinite,
+              child: FutureBuilder<RouteNavigationModel>(
+                future: apiService.getRouteAPI(
+                    widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount:
+                          snapshot.data!.routes![0].legs?[0].steps?.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          "${index + 1} - ${snapshot.data!.routes![0].legs![0].steps![index].manuever!.instruction}",
+                        );
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  } else if (snapshot == null) {
+                    return const Text("No Data");
+                  } else {
+                    return const Center(
+                        child: SpinKitFadingCircle(
+                      color: kMainColor,
+                    ));
+                  }
+                },
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Close"),
+              ),
+            ],
+          );
+        });
+  }
 }
