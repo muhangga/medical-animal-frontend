@@ -200,7 +200,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
                           backgroundColor:
                               MaterialStateProperty.all(kRedColor)),
                       onPressed: _showDialogRoute,
-                      child: Text("Show Route"),
+                      child: const Text("Show Route"),
                     ),
                   ))
             ],
@@ -216,7 +216,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
         width: double.infinity,
         padding:
             const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 30),
-        margin: const EdgeInsets.only(top: 370),
+        margin: const EdgeInsets.only(top: 350),
         decoration: const BoxDecoration(
           color: kWhiteColor,
           borderRadius: BorderRadius.only(
@@ -272,11 +272,11 @@ class _DetailMapPageState extends State<DetailMapPage> {
                     onPressed: () async {
                       Uri phoneNumber = Uri.parse("tel:${widget.phone}");
 
-                      if (await launchUrl(phoneNumber)) {
-                        print("success");
-                      } else {
-                        // TODO :: show error with alert dialog
-                      }
+                      // if (await launchUrl(phoneNumber)) {
+                      //   print("success");
+                      // } else {
+                      //   // TODO :: show error with alert dialog
+                      // }
                     },
                     icon: const Icon(
                       Icons.phone,
@@ -416,54 +416,54 @@ class _DetailMapPageState extends State<DetailMapPage> {
 
   _showDialogRoute() async {
     return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              "Rute Perjalanan",
-              style: redTextStyle.copyWith(fontSize: 24, fontWeight: bold),
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Rute Perjalanan",
+            style: redTextStyle.copyWith(fontSize: 24, fontWeight: bold),
+          ),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: FutureBuilder<RouteNavigationModel>(
+              future: apiService.getRouteAPI(
+                  widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: snapshot.data!.routes![0].legs?[0].steps?.length,
+                    itemBuilder: (context, index) {
+                      return Text(
+                        "${index + 1} - ${snapshot.data!.routes![0].legs![0].steps![index].manuever!.instruction}",
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } else if (snapshot == null) {
+                  return const Text("No Data");
+                } else {
+                  return const Center(
+                      child: SpinKitFadingCircle(
+                    color: kMainColor,
+                  ));
+                }
+              },
             ),
-            content: SizedBox(
-              width: double.maxFinite,
-              child: FutureBuilder<RouteNavigationModel>(
-                future: apiService.getRouteAPI(
-                    widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount:
-                          snapshot.data!.routes![0].legs?[0].steps?.length,
-                      itemBuilder: (context, index) {
-                        return Text(
-                          "${index + 1} - ${snapshot.data!.routes![0].legs![0].steps![index].manuever!.instruction}",
-                        );
-                      },
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  } else if (snapshot == null) {
-                    return const Text("No Data");
-                  } else {
-                    return const Center(
-                        child: SpinKitFadingCircle(
-                      color: kMainColor,
-                    ));
-                  }
-                },
-              ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Close"),
             ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Close"),
-              ),
-            ],
-          );
-        });
+          ],
+        );
+      },
+    );
   }
 }

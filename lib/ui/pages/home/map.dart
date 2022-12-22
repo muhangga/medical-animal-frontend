@@ -11,6 +11,7 @@ import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/common/constant.dart';
 import 'package:medical_animal/core/services/map_service.dart';
 import 'package:medical_animal/core/services/mapbox_directions.dart';
+import 'package:medical_animal/ui/pages/home/main_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:medical_animal/core/common/theme.dart';
 
@@ -87,9 +88,7 @@ class _MapState extends State<MapPage> {
 
   Future<void> getUserAndClinicLocation() async {
     await _getUserPosition();
-    Future.delayed(const Duration(seconds: 4), () {
-      _getNearClinicLocation();
-    });
+    await _getNearClinicLocation();
   }
 
   void checkPermission() async {
@@ -171,7 +170,8 @@ class _MapState extends State<MapPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () => Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => MainPage())),
             child: const Align(
               alignment: Alignment.topLeft,
               child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),

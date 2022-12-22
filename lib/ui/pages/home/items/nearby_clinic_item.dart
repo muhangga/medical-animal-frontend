@@ -68,7 +68,7 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
   @override
   void initState() {
     super.initState();
-    permissionService.checkPermissionUser();
+    permissionService.checkPermission(context);
     print(getUserAndNearClinicLocation());
   }
 

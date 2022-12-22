@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/map_service.dart';
@@ -39,6 +40,11 @@ class _MainPageState extends State<MainPage> {
       pageController!.animateToPage(index,
           duration: const Duration(milliseconds: 500), curve: Curves.ease);
     });
+  }
+
+  void _onTappedMap() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const MapPage()));
   }
 
   @override
@@ -99,9 +105,8 @@ class _MainPageState extends State<MainPage> {
                     color: kBlackColor,
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (builder) => const MapPage()));
+                onPressed: () async {
+                  _onTappedMap();
                 },
               ),
             ),
@@ -138,10 +143,7 @@ class _MainPageState extends State<MainPage> {
             },
             items: [
               BottomNavigationBarItem(
-                title: Text(
-                  'Home',
-                  style: GoogleFonts.raleway(fontSize: 12, fontWeight: bold),
-                ),
+                label: "Home",
                 icon: Container(
                   margin: const EdgeInsets.only(bottom: 6),
                   height: 20,
@@ -152,10 +154,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               BottomNavigationBarItem(
-                title: Text(
-                  'Klinik Hewan',
-                  style: GoogleFonts.raleway(fontSize: 12, fontWeight: bold),
-                ),
+                label: "Klinik Hewan",
                 icon: Container(
                   margin: const EdgeInsets.only(bottom: 6),
                   height: 20,

@@ -9,11 +9,7 @@ class PermissionService {
   Future<void> checkPermission(BuildContext context) async {
     if (await permission.isGranted) {
       print('permission granted');
-    } else {
-      Map<Permission, PermissionStatus> statuses = await [
-        Permission.location,
-      ].request();
-
+    } else if (await permission.status.isDenied) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.red,
         content: Text(
@@ -21,19 +17,11 @@ class PermissionService {
           style: whiteTextStyle,
         ),
       ));
+    } else {
+      Map<Permission, PermissionStatus> statuses = await [
+        Permission.location,
+      ].request();
       print(statuses[Permission.location]);
     }
   }
-
-  void checkPermissionUser() async {
-    if (await permission.isGranted) {
-      print('permission granted');
-    }
-
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-    ].request();
-    print(statuses[Permission.location]);
-  }
-
 }

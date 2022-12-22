@@ -40,9 +40,7 @@ class _HomePageState extends State<HomePage> {
       List<Placemark> placemark = await placemarkFromCoordinates(
           _currentPosition!.latitude, _currentPosition!.longitude);
       Placemark? placemarkData = placemark[0];
-      if (!mounted) {
-        return;
-      }
+      if (!mounted) return;
       setState(() {
         _currentAddress =
             '${placemarkData.thoroughfare}, ${placemarkData.subLocality} ${placemarkData.locality}, ${placemarkData.subAdministrativeArea} ${placemarkData.administrativeArea}, ${placemarkData.postalCode} ${placemarkData.country}';
@@ -185,12 +183,22 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 10),
                     _currentAddress == null
-                        ? const SpinKitFadingCircle(
-                            color: Colors.red,
-                            size: 25,
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Mencari alamat",
+                                style: greyTextStyle.copyWith(fontSize: 16),
+                              ),
+                              const SizedBox(width: 5),
+                              const SpinKitThreeBounce(
+                                color: kGreyColor,
+                                size: 8,
+                              ),
+                            ],
                           )
                         : Text(
-                            _currentAddress ?? "Mencari alamat...",
+                            _currentAddress.toString(),
                             style: greyTextStyle.copyWith(
                                 fontSize: 16, fontWeight: medium),
                             overflow: TextOverflow.clip,
@@ -205,4 +213,5 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 }

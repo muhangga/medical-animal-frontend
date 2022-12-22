@@ -45,21 +45,13 @@ class MapService {
     return position;
   }
 
-  Future<void> launchUrlPath(String path) async {
-    if (!await launchUrl(Uri.parse(path))) {
-      throw 'Could not launch $path';
-    }
+  // Future<void> lauchUrlMap(double lat, double long) async {
+  //   String url =
+  //       'https://www.google.com/maps/search/?api=$GOOGLEMAPS_APIKEY&query=$lat,$long';
+  //   if (!await launchUrl(Uri.parse(url))) {
+  //     throw 'Could not launch $url';
+  //   }
 
-    await launchUrl(Uri.parse(path));
-  }
-
-  Future<void> lauchUrlMap(double lat, double long) async {
-    String url =
-        'https://www.google.com/maps/search/?api=$GOOGLEMAPS_APIKEY&query=$lat,$long';
-    if (!await launchUrl(Uri.parse(url))) {
-      throw 'Could not launch $url';
-    }
-
-    await launchUrl(Uri.parse(url));
-  }
+  //   await launchUrl(Uri.parse(url));
+  // }
 }
