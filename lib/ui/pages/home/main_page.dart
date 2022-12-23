@@ -9,6 +9,7 @@ import 'package:medical_animal/core/services/permission_service.dart';
 import 'package:medical_animal/ui/pages/home/home_page.dart';
 import 'package:medical_animal/ui/pages/home/list_klinik_page.dart';
 import 'package:medical_animal/ui/pages/home/map.dart';
+import 'package:medical_animal/ui/widgets/alert_location_widget.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
@@ -89,28 +90,25 @@ class _MainPageState extends State<MainPage> {
           ),
           createCustomBottomNavbar(),
           Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 46,
-              width: 46,
-              margin: const EdgeInsets.only(bottom: 42),
-              child: FloatingActionButton(
-                elevation: 0,
-                backgroundColor: const Color(0xffF6C343),
-                child: const SizedBox(
-                  height: 26,
-                  width: 26,
-                  child: Icon(
-                    MdiIcons.map,
-                    color: kBlackColor,
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 46,
+                width: 46,
+                margin: const EdgeInsets.only(bottom: 42),
+                child: FloatingActionButton(
+                  elevation: 0,
+                  backgroundColor: const Color(0xffF6C343),
+                  child: const SizedBox(
+                    height: 26,
+                    width: 26,
+                    child: Icon(
+                      MdiIcons.map,
+                      color: kBlackColor,
+                    ),
                   ),
+                  onPressed: () => _onTappedMap(),
                 ),
-                onPressed: () async {
-                  _onTappedMap();
-                },
-              ),
-            ),
-          )
+              )),
         ],
       ),
     );
