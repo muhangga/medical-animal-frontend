@@ -28,8 +28,17 @@ class _ListKlinikPageState extends State<ListKlinikPage>
   final List<Tab> myTabs = [
     const Tab(
         child: Text("Semua", style: TextStyle(fontWeight: FontWeight.bold))),
-    const Tab(
-        child: Text("Terdekat", style: TextStyle(fontWeight: FontWeight.bold))),
+    Tab(
+      child: GestureDetector(
+        onTap: () {
+          print('nearby');
+        },
+        child: Text(
+          "Terdekat",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+    ),
   ];
 
   @override
@@ -78,7 +87,7 @@ class _ListKlinikPageState extends State<ListKlinikPage>
         body: SafeArea(
             child: TabBarView(
           controller: _tabController,
-          children: [
+          children: const [
             AllClinicItem(),
             NearbyClinicItem(),
           ],

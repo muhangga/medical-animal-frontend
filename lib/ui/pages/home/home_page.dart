@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -59,6 +60,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: kSecondaryColor,
+      statusBarIconBrightness: Brightness.light,
+    ));
     return Scaffold(
       backgroundColor: const Color(0xffF1F1F1),
       body: SafeArea(
@@ -213,5 +218,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }

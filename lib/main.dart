@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medical_animal/ui/pages/home/get_started_page.dart';
 import 'package:medical_animal/ui/pages/home/main_page.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: GoogleFonts.raleway().fontFamily,
       ),
-      home: MainPage(),
+      home: GetStarted(),
     );
   }
 }

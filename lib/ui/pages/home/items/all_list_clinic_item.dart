@@ -100,6 +100,10 @@ class _AllClinicItemState extends State<AllClinicItem> {
                             sunday: allClinic[index].sunday,
                             monday: allClinic[index].monday,
                             tuesday: allClinic[index].tuesday,
+                            konsultasi: allClinic[index].konsultasi,
+                            layananMedis: allClinic[index].layananMedis,
+                            penginapan: allClinic[index].penginapan,
+                            grooming: allClinic[index].grooming,
                           ),
                         ),
                       );

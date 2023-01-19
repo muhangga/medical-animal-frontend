@@ -78,19 +78,18 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
         longPressDestinationEnabled: true,
         language: "id");
 
-    sourceWaypoint = WayPoint(
+    destinationWaypoint = WayPoint(
         name: "Lokasi Anda",
         latitude: widget.userLat!,
         longitude: widget.userLong!);
 
-    destinationWaypoint = WayPoint(
+    sourceWaypoint = WayPoint(
         name: "Klinik Hewan",
         latitude: widget.clinicLat!,
         longitude: widget.clinicLong!);
 
-    wayPoints.add(sourceWaypoint);
-
     wayPoints.add(destinationWaypoint);
+    wayPoints.add(sourceWaypoint);
 
     await directions?.startNavigation(
       wayPoints: wayPoints,
@@ -143,56 +142,6 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
     } else {
       print("Unhandled event: ${e.eventType}");
     }
-
-    // distanceRemaining = await directions!.distanceRemaining;
-    // durationRemaining = await directions!.durationRemaining;
-
-    // switch (e.eventType) {
-    //   case MapBoxEvent.progress_change:
-    //     var progressEvent = e.data as RouteProgressEvent;
-    //     if (progressEvent.currentStepInstruction != null) {
-    //       instruction = progressEvent.currentStepInstruction!;
-    //     }
-    //     break;
-    //   case MapBoxEvent.route_building:
-    //   case MapBoxEvent.route_built:
-    //     setState(() {
-    //       routeBuilt = true;
-    //     });
-    //     break;
-    //   case MapBoxEvent.route_build_failed:
-    //     setState(() {
-    //       routeBuilt = false;
-    //     });
-    //     break;
-    //   case MapBoxEvent.navigation_running:
-    //     setState(() {
-    //       isNavigating = true;
-    //     });
-
-    //     break;
-    //   case MapBoxEvent.on_arrival:
-    //     if (!isMultipleStop) {
-    //       await Future.delayed(const Duration(seconds: 3));
-    //       await _controller?.finishNavigation();
-    //     } else {}
-
-    //     break;
-    //   case MapBoxEvent.navigation_finished:
-    //     setState(() {
-    //       isNavigating = false;
-    //     });
-    //     break;
-    //   case MapBoxEvent.navigation_cancelled:
-    //     setState(() {
-    //       routeBuilt = false;
-    //       isNavigating = false;
-    //     });
-    //     break;
-    //   default:
-    //     break;
-    // }
-    // setState(() {});
   }
 
   _pushReplacament() {
@@ -209,202 +158,6 @@ class _TurnNavigationPageState extends State<TurnNavigationPage> {
     return MaterialApp(
       home: Scaffold(
         body: MainPage(),
-        // body: Center(
-        //   child: Column(children: <Widget>[
-        //     Expanded(
-        //       child: SingleChildScrollView(
-        //         child: Column(
-        //           children: [
-        //             SizedBox(
-        //               height: 10,
-        //             ),
-        //             Container(
-        //               color: Colors.grey,
-        //               width: double.infinity,
-        //               child: Padding(
-        //                 padding: EdgeInsets.all(10),
-        //                 child: (Text(
-        //                   "Full Screen Navigation",
-        //                   style: TextStyle(color: Colors.white),
-        //                   textAlign: TextAlign.center,
-        //                 )),
-        //               ),
-        //             ),
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.center,
-        //               children: [
-        //                 ElevatedButton(
-        //                   child: Text("Start A to B"),
-        //                   onPressed: () async {
-        //                     // var wayPoints = <WayPoint>[];
-        //                     // wayPoints.add(home);
-        //                     // wayPoints.add(_store);
-
-        //                     // await _directions.startNavigation(
-        //                     //   wayPoints: wayPoints,
-        //                     //   options: MapBoxOptions(
-        //                     //       mode: MapBoxNavigationMode.drivingWithTraffic,
-        //                     //       simulateRoute: false,
-        //                     //       language: "en",
-        //                     //       units: VoiceUnits.metric),
-        //                     // );
-        //                   },
-        //                 ),
-        //                 SizedBox(
-        //                   width: 10,
-        //                 ),
-        //                 ElevatedButton(
-        //                   child: Text("Start Multi Stop"),
-        //                   onPressed: () async {
-        //                     // isMultipleStop = true;
-        //                     // var wayPoints = <WayPoint>[];
-        //                     // wayPoints.add(_origin);
-        //                     // wayPoints.add(_stop1);
-        //                     // wayPoints.add(_stop2);
-        //                     // wayPoints.add(_stop3);
-        //                     // wayPoints.add(_destination);
-        //                     // wayPoints.add(_origin);
-
-        //                     // await directions.startNavigation(
-        //                     //     wayPoints: wayPoints,
-        //                     //     options: MapBoxOptions(
-        //                     //         mode: MapBoxNavigationMode.driving,
-        //                     //         simulateRoute: true,
-        //                     //         language: "en",
-        //                     //         allowsUTurnAtWayPoints: true,
-        //                     //         units: VoiceUnits.metric));
-        //                   },
-        //                 )
-        //               ],
-        //             ),
-        //             Container(
-        //               color: Colors.grey,
-        //               width: double.infinity,
-        //               child: Padding(
-        //                 padding: EdgeInsets.all(10),
-        //                 child: (Text(
-        //                   "Embedded Navigation",
-        //                   style: TextStyle(color: Colors.white),
-        //                   textAlign: TextAlign.center,
-        //                 )),
-        //               ),
-        //             ),
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.center,
-        //               children: [
-        //                 ElevatedButton(
-        //                   child: Text(routeBuilt && !isNavigating
-        //                       ? "Clear Route"
-        //                       : "Build Route"),
-        //                   onPressed: isNavigating
-        //                       ? null
-        //                       : () {
-        //                           if (routeBuilt) {
-        //                             _controller?.clearRoute();
-        //                           } else {
-        //                             var wayPoints = <WayPoint>[];
-        //                             // wayPoints.add();
-        //                             // wayPoints.add(_store);
-        //                             isMultipleStop = wayPoints.length > 2;
-        //                             _controller?.buildRoute(
-        //                                 wayPoints: wayPoints,
-        //                                 options: _options);
-        //                           }
-        //                         },
-        //                 ),
-        //                 SizedBox(
-        //                   width: 10,
-        //                 ),
-        //                 ElevatedButton(
-        //                   child: Text("Start "),
-        //                   onPressed: routeBuilt && !isNavigating
-        //                       ? () {
-        //                           _controller?.startNavigation();
-        //                         }
-        //                       : null,
-        //                 ),
-        //                 SizedBox(
-        //                   width: 10,
-        //                 ),
-        //                 ElevatedButton(
-        //                   child: Text("Cancel "),
-        //                   onPressed: isNavigating
-        //                       ? () {
-        //                           _controller?.finishNavigation();
-        //                         }
-        //                       : null,
-        //                 )
-        //               ],
-        //             ),
-        //             Center(
-        //               child: Padding(
-        //                 padding: EdgeInsets.all(10),
-        //                 child: Text(
-        //                   "Long-Press Embedded Map to Set Destination",
-        //                   textAlign: TextAlign.center,
-        //                 ),
-        //               ),
-        //             ),
-        //             Container(
-        //               color: Colors.grey,
-        //               width: double.infinity,
-        //               child: Padding(
-        //                 padding: EdgeInsets.all(10),
-        //                 child: (Text(
-        //                   instruction == null || instruction.isEmpty
-        //                       ? "Banner Instruction Here"
-        //                       : instruction,
-        //                   style: const TextStyle(color: Colors.white),
-        //                   textAlign: TextAlign.center,
-        //                 )),
-        //               ),
-        //             ),
-        //             Padding(
-        //               padding: const EdgeInsets.only(
-        //                   left: 20.0, right: 20, top: 20, bottom: 10),
-        //               child: Column(
-        //                 mainAxisAlignment: MainAxisAlignment.center,
-        //                 children: <Widget>[
-        //                   Row(
-        //                     children: <Widget>[
-        //                       Text("Duration Remaining: "),
-        //                       // Text(durationRemaining != null
-        //                       //     ? "${(durationRemaining/ 60).toStringAsFixed(0)} minutes"
-        //                       //     : "---")
-        //                     ],
-        //                   ),
-        //                   Row(
-        //                     children: <Widget>[
-        //                       Text("Distance Remaining: "),
-        //                       // Text(distanceRemaining != null
-        //                       //     ? "${(distanceRemaining! * 0.000621371).toStringAsFixed(1)} miles"
-        //                       //     : "---")
-        //                     ],
-        //                   ),
-        //                 ],
-        //               ),
-        //             ),
-        //             Divider()
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //     Expanded(
-        //       flex: 1,
-        //       child: Container(
-        //         color: Colors.grey,
-        //         child: MapBoxNavigationView(
-        //             options: _options,
-        //             onRouteEvent: _onEmbeddedRouteEvent,
-        //             onCreated:
-        //                 (MapBoxNavigationViewController controller) async {
-        //               _controller = controller;
-        //               controller.initialize();
-        //             }),
-        //       ),
-        //     )
-        //   ]),
-        // ),
       ),
     );
   }

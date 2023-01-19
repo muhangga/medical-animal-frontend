@@ -3,6 +3,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:medical_animal/core/api/api_service.dart';
+import 'package:medical_animal/core/common/device_name.dart';
 import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/map_service.dart';
 import 'package:medical_animal/core/services/permission_service.dart';
@@ -23,14 +25,30 @@ class _MainPageState extends State<MainPage> {
   PageController? pageController;
 
   MapService mapService = MapService();
+  ApiService apiService = ApiService();
+  DeviceName deviceName = DeviceName();
+
   PermissionService permissionService = PermissionService();
   Position? _currentPosition;
+
+  String? deviceNameAndroid;
+
+  void getDeviceName() async {
+    deviceName = DeviceName();
+    deviceNameAndroid = await deviceName.getDeviceName();
+    print(deviceNameAndroid);
+  }
 
   void _getUserPosition() async {
     mapService.getGeoLocationPosition().then((value) {
       if (!mounted) return;
       setState(() {
         _currentPosition = value;
+        apiService.insertUser(
+          _currentPosition!.latitude,
+          _currentPosition!.longitude,
+          deviceNameAndroid,
+        );
       });
     });
   }
@@ -61,6 +79,7 @@ class _MainPageState extends State<MainPage> {
     _getUserPosition();
     pageController = PageController(initialPage: bottomNavbarIndex);
     permissionService.checkPermission(context);
+    getDeviceName();
   }
 
   @override
@@ -106,7 +125,10 @@ class _MainPageState extends State<MainPage> {
                       color: kBlackColor,
                     ),
                   ),
-                  onPressed: () => _onTappedMap(),
+                  onPressed: () async {
+                    _getUserPosition();
+                    _onTappedMap();
+                  },
                 ),
               )),
         ],

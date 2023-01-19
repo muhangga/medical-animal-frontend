@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/api/models/route_navigation_model.dart';
+import 'package:medical_animal/core/api/models/users_model.dart';
 import 'package:medical_animal/core/common/constant.dart';
 
 class ApiService {
@@ -50,6 +51,7 @@ class ApiService {
         throw Exception('Failed to load post');
       }
     } catch (e) {
+      print(e.toString());
       throw Exception(e.toString());
     }
   }
@@ -94,6 +96,22 @@ class ApiService {
     } catch (e) {
       log(e.toString());
       throw Exception('Something went wrong!');
+    }
+  }
+
+  Future insertUser(double? userLat, double? userLong, String? device) async {
+    var url = baseURL + "user-request";
+    var response = await http.post(Uri.parse(url), body: {
+      "latitude": userLat.toString(),
+      "longitude": userLong.toString(),
+      "device": device
+    });
+
+    if (response.statusCode != 200) {
+      print(response.body);
+      throw Exception('Failed to load post');
+    } else {
+      return response.body;
     }
   }
 }

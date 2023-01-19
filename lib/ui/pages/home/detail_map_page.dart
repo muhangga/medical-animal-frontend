@@ -32,6 +32,10 @@ class DetailMapPage extends StatefulWidget {
   String? sunday;
   String? monday;
   String? tuesday;
+  String? konsultasi;
+  String? layananMedis;
+  String? penginapan;
+  String? grooming;
   double? distance;
   DetailMapPage(
       {Key? key,
@@ -52,6 +56,10 @@ class DetailMapPage extends StatefulWidget {
       this.sunday,
       this.monday,
       this.tuesday,
+      this.konsultasi,
+      this.layananMedis,
+      this.penginapan,
+      this.grooming,
       this.distance})
       : super(key: key);
 
@@ -272,11 +280,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
                     onPressed: () async {
                       Uri phoneNumber = Uri.parse("tel:${widget.phone}");
 
-                      // if (await launchUrl(phoneNumber)) {
-                      //   print("success");
-                      // } else {
-                      //   // TODO :: show error with alert dialog
-                      // }
+                      await launchUrl(phoneNumber);
                     },
                     icon: const Icon(
                       Icons.phone,
@@ -329,8 +333,8 @@ class _DetailMapPageState extends State<DetailMapPage> {
             widget.website == "null"
                 ? Text("null", style: redTextStyle.copyWith(fontSize: 14))
                 : GestureDetector(
-                    // TODO :: launch link
-                    onTap: () {},
+                    onTap: () =>
+                        launchUrl(Uri.parse(widget.website.toString())),
                     child: Text("Link",
                         style: redTextStyle.copyWith(
                             fontSize: 14,
@@ -368,46 +372,70 @@ class _DetailMapPageState extends State<DetailMapPage> {
       children: [
         Column(
           children: [
-            Text("Ruang Periksa", style: blackTextStyle),
+            Text("Konsultasi", style: blackTextStyle),
             const SizedBox(height: 5),
-            const Icon(
-              Icons.check_circle,
-              color: kMainColor,
-              size: 20,
-            ),
+            widget.konsultasi == "TRUE" || widget.konsultasi == "true"
+                ? const Icon(
+                    Icons.check_circle,
+                    color: kMainColor,
+                    size: 20,
+                  )
+                : const Icon(
+                    Icons.cancel,
+                    color: kRedColor,
+                    size: 20,
+                  ),
           ],
         ),
         Column(
           children: [
             Text("Layanan Medis", style: blackTextStyle),
             const SizedBox(height: 5),
-            const Icon(
-              Icons.check_circle,
-              color: kMainColor,
-              size: 20,
-            ),
+            widget.layananMedis == "TRUE" || widget.layananMedis == "true"
+                ? const Icon(
+                    Icons.check_circle,
+                    color: kMainColor,
+                    size: 20,
+                  )
+                : const Icon(
+                    Icons.cancel,
+                    color: kRedColor,
+                    size: 20,
+                  ),
           ],
         ),
         Column(
           children: [
             Text("Penginapan", style: blackTextStyle),
             const SizedBox(height: 5),
-            const Icon(
-              Icons.check_circle,
-              color: kMainColor,
-              size: 20,
-            ),
+            widget.penginapan == "TRUE" || widget.penginapan == "true"
+                ? const Icon(
+                    Icons.check_circle,
+                    color: kMainColor,
+                    size: 20,
+                  )
+                : const Icon(
+                    Icons.cancel,
+                    color: kRedColor,
+                    size: 20,
+                  ),
           ],
         ),
         Column(
           children: [
             Text("Grooming", style: blackTextStyle),
             const SizedBox(height: 5),
-            const Icon(
-              Icons.check_circle,
-              color: kMainColor,
-              size: 20,
-            ),
+            widget.grooming == "TRUE" || widget.grooming == "true"
+                ? const Icon(
+                    Icons.check_circle,
+                    color: kMainColor,
+                    size: 20,
+                  )
+                : const Icon(
+                    Icons.cancel,
+                    color: kRedColor,
+                    size: 20,
+                  ),
           ],
         ),
       ],

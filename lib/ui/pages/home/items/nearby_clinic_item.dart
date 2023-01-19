@@ -63,6 +63,7 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
   Future<void> getUserAndNearClinicLocation() async {
     await _getUserPosition();
     await _nearbyClinicByUser();
+    // await handleUserRequest();
   }
 
   @override
@@ -95,8 +96,11 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => DetailMapPage(
-                                    clinicName: nearbyClinic[index].clinicName,
-                                    address: nearbyClinic[index].address,
+                                    clinicName: nearbyClinic[index]
+                                        .clinicName
+                                        .toString(),
+                                    address:
+                                        nearbyClinic[index].address.toString(),
                                     phone: nearbyClinic[index].phoneNumber,
                                     uLat: _currentPosition!.latitude,
                                     uLong: _currentPosition!.longitude,
@@ -104,16 +108,34 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
                                     cLong: nearbyClinic[index].longitude,
                                     rating: nearbyClinic[index].rating,
                                     reviews: nearbyClinic[index].reviews,
-                                    website: nearbyClinic[index].website,
+                                    website:
+                                        nearbyClinic[index].website.toString(),
                                     wednesday: nearbyClinic[index]
                                         .wednesday
                                         .toString(),
-                                    thursday: nearbyClinic[index].thursday,
-                                    friday: nearbyClinic[index].friday,
-                                    saturday: nearbyClinic[index].saturday,
-                                    sunday: nearbyClinic[index].sunday,
-                                    monday: nearbyClinic[index].monday,
-                                    tuesday: nearbyClinic[index].tuesday,
+                                    thursday:
+                                        nearbyClinic[index].thursday.toString(),
+                                    friday:
+                                        nearbyClinic[index].friday.toString(),
+                                    saturday:
+                                        nearbyClinic[index].saturday.toString(),
+                                    sunday:
+                                        nearbyClinic[index].sunday.toString(),
+                                    monday:
+                                        nearbyClinic[index].monday.toString(),
+                                    tuesday:
+                                        nearbyClinic[index].tuesday.toString(),
+                                    konsultasi: nearbyClinic[index]
+                                        .konsultasi
+                                        .toString(),
+                                    layananMedis: nearbyClinic[index]
+                                        .layananMedis
+                                        .toString(),
+                                    penginapan: nearbyClinic[index]
+                                        .penginapan
+                                        .toString(),
+                                    grooming:
+                                        nearbyClinic[index].grooming.toString(),
                                     distance: nearbyClinic[index].distance,
                                   )));
                     },

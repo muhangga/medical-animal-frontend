@@ -18,6 +18,10 @@ class ClinicModel {
   String? sunday;
   String? monday;
   String? tuesday;
+  String? konsultasi;
+  String? layananMedis;
+  String? penginapan;
+  String? grooming;
 
   ClinicModel({
     this.id,
@@ -37,6 +41,10 @@ class ClinicModel {
     this.sunday,
     this.monday,
     this.tuesday,
+    this.konsultasi,
+    this.layananMedis,
+    this.penginapan,
+    this.grooming,
   });
 
   ClinicModel.fromJson(Map<String, dynamic> json) {
@@ -57,6 +65,10 @@ class ClinicModel {
     sunday = json['sunday'] ?? '';
     monday = json['monday'] ?? '';
     tuesday = json['tuesday'] ?? '';
+    konsultasi = json['konsultasi'] ?? '';
+    layananMedis = json['layanan_medis'] ?? '';
+    penginapan = json['penginapan'] ?? '';
+    grooming = json['grooming'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -78,6 +90,10 @@ class ClinicModel {
     data['sunday'] = sunday;
     data['monday'] = monday;
     data['tuesday'] = tuesday;
+    data['konsultasi'] = konsultasi;
+    data['layanan_medis'] = layananMedis;
+    data['penginapan'] = penginapan;
+    data['grooming'] = grooming;
     return data;
   }
 }
