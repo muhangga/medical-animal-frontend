@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/common/device_name.dart';
@@ -11,7 +9,6 @@ import 'package:medical_animal/core/services/permission_service.dart';
 import 'package:medical_animal/ui/pages/home/home_page.dart';
 import 'package:medical_animal/ui/pages/home/list_klinik_page.dart';
 import 'package:medical_animal/ui/pages/home/map.dart';
-import 'package:medical_animal/ui/widgets/alert_location_widget.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);

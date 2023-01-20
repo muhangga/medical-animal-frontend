@@ -1,4 +1,4 @@
-import 'package:medical_animal/core/api/models/working_hours_model.dart';
+
 
 class ClinicModel {
   int? id;

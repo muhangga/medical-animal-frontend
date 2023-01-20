@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:medical_animal/core/api/api_service.dart';
@@ -12,7 +8,6 @@ import 'package:medical_animal/core/common/constant.dart';
 import 'package:medical_animal/core/services/map_service.dart';
 import 'package:medical_animal/core/services/mapbox_directions.dart';
 import 'package:medical_animal/ui/pages/home/main_page.dart';
-import 'package:medical_animal/ui/widgets/alert_location_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:medical_animal/core/common/theme.dart';
 

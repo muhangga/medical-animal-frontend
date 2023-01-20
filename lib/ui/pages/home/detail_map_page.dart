@@ -1,7 +1,5 @@
-import 'dart:convert';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:medical_animal/core/api/api_service.dart';
@@ -198,6 +196,19 @@ class _DetailMapPageState extends State<DetailMapPage> {
                   ),
                 ),
               ),
+              Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 20, left: 30),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor:
+                              MaterialStateProperty.all(kRedColor)),
+                      onPressed: _showDialogDistance,
+                      child: const Text("Show Distance"),
+                    ),
+                  )),
               Align(
                   alignment: Alignment.centerRight,
                   child: Container(
@@ -466,6 +477,71 @@ class _DetailMapPageState extends State<DetailMapPage> {
                     itemBuilder: (context, index) {
                       return Text(
                         "${index + 1} - ${snapshot.data!.routes![0].legs![0].steps![index].manuever!.instruction}",
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } else if (snapshot == null) {
+                  return const Text("No Data");
+                } else {
+                  return const Center(
+                      child: SpinKitFadingCircle(
+                    color: kMainColor,
+                  ));
+                }
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showDialogDistance() async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Perbedaan Jarak",
+            style: redTextStyle.copyWith(fontSize: 24, fontWeight: bold),
+          ),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: FutureBuilder<RouteNavigationModel>(
+              future: apiService.getRouteAPI(
+                  widget.uLat!, widget.uLong!, widget.cLat!, widget.cLong!),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: 1,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            " MapBox: ${snapshot.data!.routes![0].distance!.toStringAsFixed(2)} km",
+                            style: blackTextStyle.copyWith(
+                                fontSize: 14, fontWeight: bold),
+                          ),
+                          Text(
+                            "Spherical Law of Cosines: ${widget.distance!.toStringAsFixed(2)} km ",
+                            style: blackTextStyle.copyWith(
+                                fontSize: 14, fontWeight: bold),
+                          ),
+                        ],
                       );
                     },
                   );

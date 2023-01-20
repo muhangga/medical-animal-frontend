@@ -19,6 +19,7 @@ class RouteNavigationModel {
 class Routes {
   bool? countryCrossed;
   double? duration;
+  double? distance;
   List<Legs>? legs;
 
   Routes({this.countryCrossed, this.duration, this.legs});
@@ -26,6 +27,7 @@ class Routes {
   Routes.fromJson(Map<String, dynamic> json) {
     countryCrossed = json['countryCrossed'];
     duration = json['duration'];
+    distance = json['distance'];
     legs = json['legs'] != null
         ? (json['legs'] as List).map((i) => Legs.fromJson(i)).toList()
         : null;
@@ -35,6 +37,7 @@ class Routes {
     return {
       'countryCrossed': countryCrossed,
       'duration': duration,
+      'distance': distance,
       'legs': legs,
     };
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mapbox_navigation/library.dart';
-import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/ui/pages/home/main_page.dart';
 
 class TurnNavigationPage extends StatefulWidget {

@@ -74,55 +74,53 @@ class _GetStartedState extends State<GetStarted> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kWhiteColor,
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Image.asset('assets/ic_user.png', width: 190, height: 190),
-            const SizedBox(height: 50),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                width: double.infinity,
-                height: 240,
-                padding: const EdgeInsets.symmetric(vertical: 40),
-                decoration: const BoxDecoration(
-                  color: kSecondaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      "Klinik Hewan Terdekat",
-                      style: whiteTextStyle.copyWith(
-                          fontSize: 24, fontWeight: bold),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "Cari Klinik Hewan Terdekat dari posisi anda sekarang",
-                      style: whiteTextStyle,
-                    ),
-                    const SizedBox(height: 30),
-                    Container(
-                      width: 240,
-                      height: 50,
-                      child: ButtonToMainPage(context),
-                    )
-                  ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Image.asset('assets/ic_user.png', width: 160, height: 190),
+          const SizedBox(height: 50),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: double.infinity,
+              height: 230,
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              decoration: const BoxDecoration(
+                color: kSecondaryColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
                 ),
               ),
-            )
-          ],
-        ),
+              child: Column(
+                children: [
+                  Text(
+                    "Klinik Hewan Terdekat",
+                    style:
+                        whiteTextStyle.copyWith(fontSize: 24, fontWeight: bold),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Cari Klinik Hewan Terdekat dari posisi anda sekarang",
+                    style: whiteTextStyle,
+                  ),
+                  const SizedBox(height: 30),
+                  Container(
+                    width: 240,
+                    height: 50,
+                    child: _buttonToMainPage(context),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Widget ButtonToMainPage(BuildContext context) {
+  Widget _buttonToMainPage(BuildContext context) {
     return GestureDetector(
       onTap: () async {
         await handleInsert();

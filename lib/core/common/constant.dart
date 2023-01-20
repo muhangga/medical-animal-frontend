@@ -1,8 +1,8 @@
 // Hotspot hp
-// const String baseURL = 'http://192.168.43.233:4000/api/';
+const String baseURL = 'http://192.168.43.233:4000/api/';
 
 // Wifi Rumah
-const String baseURL = 'http://192.168.0.106:4000/api/';
+// const String baseURL = 'http://192.168.0.106:4000/api/';
 
 // Wifi Unpak
 // const String baseURL = 'http://10.32.96.135:4000/api/';

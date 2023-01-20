@@ -6,7 +6,6 @@ import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/permission_service.dart';
 import 'package:medical_animal/ui/pages/home/detail_map_page.dart';
-import 'package:medical_animal/ui/pages/home/detail_page.dart';
 
 class AllClinicItem extends StatefulWidget {
   const AllClinicItem({Key? key}) : super(key: key);

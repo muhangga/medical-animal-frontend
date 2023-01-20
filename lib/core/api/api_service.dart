@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:medical_animal/core/api/models/clinic_model.dart';
 import 'package:medical_animal/core/api/models/route_navigation_model.dart';
-import 'package:medical_animal/core/api/models/users_model.dart';
 import 'package:medical_animal/core/common/constant.dart';
 
 class ApiService {
