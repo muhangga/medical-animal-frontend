@@ -1,4 +1,3 @@
-
 import 'package:device_info_plus/device_info_plus.dart';
 
 class DeviceName {
@@ -7,6 +6,9 @@ class DeviceName {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
     print('Running on ${androidInfo.model}'); // e.g. "Moto G (4)"
+    // version
+    print('Running version on ${androidInfo.version.sdkInt}'); // e.g. "Moto G (4)"
+
     return androidInfo.model;
   }
 }

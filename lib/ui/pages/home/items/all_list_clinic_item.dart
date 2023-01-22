@@ -36,7 +36,9 @@ class _AllClinicItemState extends State<AllClinicItem> {
 
   Future<void> _getAllClinic() async {
     if (_currentPosition != null) {
-      await apiService.getClinic().then((value) {
+      await apiService
+          .getClinic(_currentPosition!.latitude, _currentPosition!.longitude)
+          .then((value) {
         if (!mounted) return;
         setState(() {
           allClinic = value;
@@ -48,10 +50,10 @@ class _AllClinicItemState extends State<AllClinicItem> {
   }
 
   Future<void> getAllClinic() async {
-    Future.delayed(const Duration(seconds: 4), () async {
+    // Future.delayed(const Duration(seconds: 4), () async {
       await _getUserPosition();
       await _getAllClinic();
-    });
+    // });
   }
 
   @override
@@ -64,80 +66,79 @@ class _AllClinicItemState extends State<AllClinicItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: allClinic.isEmpty
-          ? const Center(
-              child: SpinKitFadingCircle(
-                color: kMainColor,
-                size: 50.0,
-              ),
-            )
-          : Container(
-              margin: const EdgeInsets.only(bottom: 90, top: 20),
-              child: ListView.builder(
-                itemCount: allClinic.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailMapPage(
-                            clinicName: allClinic[index].clinicName,
-                            address: allClinic[index].address,
-                            phone: allClinic[index].phoneNumber,
-                            uLat: _currentPosition!.latitude,
-                            uLong: _currentPosition!.longitude,
-                            cLat: allClinic[index].latitude,
-                            cLong: allClinic[index].longitude,
-                            rating: allClinic[index].rating,
-                            website: allClinic[index].website,
-                            reviews: allClinic[index].reviews,
-                            wednesday: allClinic[index].wednesday,
-                            thursday: allClinic[index].thursday,
-                            friday: allClinic[index].friday,
-                            saturday: allClinic[index].saturday,
-                            sunday: allClinic[index].sunday,
-                            monday: allClinic[index].monday,
-                            tuesday: allClinic[index].tuesday,
-                            konsultasi: allClinic[index].konsultasi,
-                            layananMedis: allClinic[index].layananMedis,
-                            penginapan: allClinic[index].penginapan,
-                            grooming: allClinic[index].grooming,
+        body: _currentPosition != null
+            ? Container(
+                margin: const EdgeInsets.only(bottom: 90, top: 20),
+                child: ListView.builder(
+                  itemCount: allClinic.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailMapPage(
+                              clinicName: allClinic[index].clinicName,
+                              address: allClinic[index].address,
+                              phone: allClinic[index].phoneNumber,
+                              uLat: _currentPosition!.latitude,
+                              uLong: _currentPosition!.longitude,
+                              cLat: allClinic[index].latitude,
+                              cLong: allClinic[index].longitude,
+                              rating: allClinic[index].rating,
+                              website: allClinic[index].website,
+                              reviews: allClinic[index].reviews,
+                              wednesday: allClinic[index].wednesday,
+                              thursday: allClinic[index].thursday,
+                              friday: allClinic[index].friday,
+                              saturday: allClinic[index].saturday,
+                              sunday: allClinic[index].sunday,
+                              monday: allClinic[index].monday,
+                              tuesday: allClinic[index].tuesday,
+                              konsultasi: allClinic[index].konsultasi,
+                              layananMedis: allClinic[index].layananMedis,
+                              penginapan: allClinic[index].penginapan,
+                              grooming: allClinic[index].grooming,
+                              distance: allClinic[index].distance,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: Card(
-                        child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(6),
-                        leading: const Icon(
-                          Icons.location_on,
-                          color: Colors.red,
-                        ),
-                        title: Text(
-                          allClinic[index].clinicName.toString(),
-                          style: blackTextStyle.copyWith(
-                              fontSize: 18, fontWeight: bold),
-                        ),
-                        subtitle: Text(
-                          allClinic[index].address.toString(),
-                          style: greyTextStyle.copyWith(fontSize: 14),
-                        ),
-                        trailing: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.directions,
+                        );
+                      },
+                      child: Card(
+                          child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(6),
+                          leading: const Icon(
+                            Icons.location_on,
                             color: Colors.red,
                           ),
+                          title: Text(
+                            allClinic[index].clinicName.toString(),
+                            style: blackTextStyle.copyWith(
+                                fontSize: 18, fontWeight: bold),
+                          ),
+                          subtitle: Text(
+                            allClinic[index].address.toString(),
+                            style: greyTextStyle.copyWith(fontSize: 14),
+                          ),
+                          trailing: Text(
+                            allClinic[index].distance!.toStringAsFixed(2) +
+                                " km",
+                            style: redTextStyle.copyWith(
+                                fontSize: 14, fontWeight: bold),
+                          ),
                         ),
-                      ),
-                    )),
-                  );
-                },
-              ),
-            ),
-    );
+                      )),
+                    );
+                  },
+                ),
+              )
+            : const Center(
+                child: SpinKitFadingCircle(
+                  color: kMainColor,
+                  size: 50.0,
+                ),
+              ));
   }
 }

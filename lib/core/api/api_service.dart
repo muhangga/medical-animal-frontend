@@ -7,9 +7,9 @@ import 'package:medical_animal/core/api/models/route_navigation_model.dart';
 import 'package:medical_animal/core/common/constant.dart';
 
 class ApiService {
-  Future<List<ClinicModel>> getClinic() async {
+  Future<List<ClinicModel>> getClinic(double? userLat, double? userLong) async {
     try {
-      var url = baseURL + 'clinics';
+      var url = baseURL + 'clinics?latitude=$userLat&longitude=$userLong';
       var response = await http.get(Uri.parse(url), headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Charset': 'utf-8'
@@ -98,12 +98,14 @@ class ApiService {
     }
   }
 
-  Future insertUser(double? userLat, double? userLong, String? device) async {
+  Future insertUser(double? userLat, double? userLong, String? device,
+      String? address) async {
     var url = baseURL + "user-request";
     var response = await http.post(Uri.parse(url), body: {
       "latitude": userLat.toString(),
       "longitude": userLong.toString(),
-      "device": device
+      "address": address.toString(),
+      "device": device,
     });
 
     if (response.statusCode != 200) {

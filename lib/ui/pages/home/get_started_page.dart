@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:medical_animal/core/api/api_service.dart';
-import 'package:medical_animal/core/api/models/users_model.dart';
 import 'package:medical_animal/core/common/device_name.dart';
 import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/map_service.dart';
@@ -24,6 +24,7 @@ class _GetStartedState extends State<GetStarted> {
   Position? _currentPosition;
 
   String? deviceNameAndroid;
+  String? _currentAddress;
 
   void getDeviceName() async {
     deviceName = DeviceName();
@@ -40,6 +41,22 @@ class _GetStartedState extends State<GetStarted> {
     });
   }
 
+  Future<void> _getAddress() async {
+    try {
+      List<Placemark> placemark = await placemarkFromCoordinates(
+          _currentPosition!.latitude, _currentPosition!.longitude);
+      Placemark? placemarkData = placemark[0];
+
+      setState(() {
+        _currentAddress =
+            '${placemarkData.thoroughfare}, ${placemarkData.subLocality} ${placemarkData.locality}, ${placemarkData.subAdministrativeArea} ${placemarkData.administrativeArea}, ${placemarkData.postalCode} ${placemarkData.country}';
+        print(_currentAddress.toString());
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> insertDataUser() async {
     if (_currentPosition != null) {
       await apiService
@@ -47,6 +64,7 @@ class _GetStartedState extends State<GetStarted> {
         _currentPosition!.latitude,
         _currentPosition!.longitude,
         deviceNameAndroid,
+        _currentAddress.toString(),
       )
           .then((value) {
         if (!mounted) return;
@@ -61,6 +79,7 @@ class _GetStartedState extends State<GetStarted> {
 
   Future<void> handleInsert() async {
     await _getUserPosition();
+    await _getAddress();
     await insertDataUser();
   }
 
@@ -80,39 +99,36 @@ class _GetStartedState extends State<GetStarted> {
         children: [
           Image.asset('assets/ic_user.png', width: 160, height: 190),
           const SizedBox(height: 50),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: double.infinity,
-              height: 230,
-              padding: const EdgeInsets.symmetric(vertical: 40),
-              decoration: const BoxDecoration(
-                color: kSecondaryColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+          Container(
+            width: double.infinity,
+            height: 230,
+            padding: const EdgeInsets.symmetric(vertical: 40),
+            decoration: const BoxDecoration(
+              color: kSecondaryColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "Klinik Hewan Terdekat",
+                  style:
+                      whiteTextStyle.copyWith(fontSize: 24, fontWeight: bold),
                 ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "Klinik Hewan Terdekat",
-                    style:
-                        whiteTextStyle.copyWith(fontSize: 24, fontWeight: bold),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Cari Klinik Hewan Terdekat dari posisi anda sekarang",
-                    style: whiteTextStyle,
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    width: 240,
-                    height: 50,
-                    child: _buttonToMainPage(context),
-                  )
-                ],
-              ),
+                const SizedBox(height: 10),
+                Text(
+                  "Cari Klinik Hewan Terdekat dari posisi anda sekarang",
+                  style: whiteTextStyle,
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  width: 240,
+                  height: 50,
+                  child: _buttonToMainPage(context),
+                )
+              ],
             ),
           )
         ],

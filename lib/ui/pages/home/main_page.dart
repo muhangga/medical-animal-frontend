@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:medical_animal/core/api/api_service.dart';
@@ -27,6 +28,7 @@ class _MainPageState extends State<MainPage> {
 
   PermissionService permissionService = PermissionService();
   Position? _currentPosition;
+  String? _currentAddress;
 
   String? deviceNameAndroid;
 
@@ -36,16 +38,30 @@ class _MainPageState extends State<MainPage> {
     print(deviceNameAndroid);
   }
 
+  Future<void> _getAddress() async {
+    try {
+      List<Placemark> placemark = await placemarkFromCoordinates(
+          _currentPosition!.latitude, _currentPosition!.longitude);
+      Placemark? placemarkData = placemark[0];
+
+      setState(() {
+        _currentAddress =
+            '${placemarkData.thoroughfare}, ${placemarkData.subLocality} ${placemarkData.locality}, ${placemarkData.subAdministrativeArea} ${placemarkData.administrativeArea}, ${placemarkData.postalCode} ${placemarkData.country}';
+        print(_currentAddress.toString());
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void _getUserPosition() async {
     mapService.getGeoLocationPosition().then((value) {
       if (!mounted) return;
       setState(() {
         _currentPosition = value;
-        apiService.insertUser(
-          _currentPosition!.latitude,
-          _currentPosition!.longitude,
-          deviceNameAndroid,
-        );
+        _getAddress();
+        apiService.insertUser(_currentPosition!.latitude,
+            _currentPosition!.longitude, deviceNameAndroid, _currentAddress);
       });
     });
   }
