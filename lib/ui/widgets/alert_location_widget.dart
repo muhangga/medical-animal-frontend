@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:medical_animal/core/common/theme.dart';
 
 showAlertLocation(BuildContext context) async {
@@ -16,12 +15,12 @@ showAlertLocation(BuildContext context) async {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Lottie.asset(
-                    "assets/lottie/error.json",
-                    animate: true,
-                    width: 200,
-                    height: 200,
-                  ),
+                  // Lottie.asset(
+                  //   "assets/lottie/error.json",
+                  //   animate: true,
+                  //   width: 200,
+                  //   height: 200,
+                  // ),
                   Text(
                     "Mohon Aktifkan Lokasi Anda",
                     style:

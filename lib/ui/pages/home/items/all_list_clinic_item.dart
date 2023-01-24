@@ -50,10 +50,10 @@ class _AllClinicItemState extends State<AllClinicItem> {
   }
 
   Future<void> getAllClinic() async {
-    // Future.delayed(const Duration(seconds: 4), () async {
+    Future.delayed(const Duration(seconds: 1), () async {
       await _getUserPosition();
       await _getAllClinic();
-    // });
+    });
   }
 
   @override

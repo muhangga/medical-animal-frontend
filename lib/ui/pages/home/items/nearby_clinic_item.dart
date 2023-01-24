@@ -7,6 +7,7 @@ import 'package:medical_animal/core/common/theme.dart';
 import 'package:medical_animal/core/services/map_service.dart';
 import 'package:medical_animal/core/services/permission_service.dart';
 import 'package:medical_animal/ui/pages/home/detail_map_page.dart';
+import 'package:medical_animal/ui/widgets/location_off_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class NearbyClinicItem extends StatefulWidget {
@@ -22,6 +23,7 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
   List<ClinicModel> nearbyClinic = [];
 
   Permission permission = Permission.location;
+  ConnectionState? connectionState;
 
   ApiService apiService = ApiService();
   MapService mapService = MapService();
@@ -61,7 +63,6 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
   Future<void> getUserAndNearClinicLocation() async {
     await _getUserPosition();
     await _nearbyClinicByUser();
-    // await handleUserRequest();
   }
 
   @override
@@ -73,115 +74,136 @@ class _NearbyClinicItemState extends State<NearbyClinicItem> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentPosition != null) {
-      return Column(
-        children: [
-          Expanded(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.9,
-              margin: const EdgeInsets.only(top: 20, bottom: 60),
-              child: ListView.builder(
-                itemCount: nearbyClinic.length,
-                itemBuilder: (context, index) {
-                  if (nearbyClinic.isEmpty) {
-                    return const Center(
-                      child: Text('No Data'),
-                    );
-                  }
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DetailMapPage(
-                                    clinicName: nearbyClinic[index]
-                                        .clinicName
-                                        .toString(),
-                                    address:
-                                        nearbyClinic[index].address.toString(),
-                                    phone: nearbyClinic[index].phoneNumber,
-                                    uLat: _currentPosition!.latitude,
-                                    uLong: _currentPosition!.longitude,
-                                    cLat: nearbyClinic[index].latitude,
-                                    cLong: nearbyClinic[index].longitude,
-                                    rating: nearbyClinic[index].rating,
-                                    reviews: nearbyClinic[index].reviews,
-                                    website:
-                                        nearbyClinic[index].website.toString(),
-                                    wednesday: nearbyClinic[index]
-                                        .wednesday
-                                        .toString(),
-                                    thursday:
-                                        nearbyClinic[index].thursday.toString(),
-                                    friday:
-                                        nearbyClinic[index].friday.toString(),
-                                    saturday:
-                                        nearbyClinic[index].saturday.toString(),
-                                    sunday:
-                                        nearbyClinic[index].sunday.toString(),
-                                    monday:
-                                        nearbyClinic[index].monday.toString(),
-                                    tuesday:
-                                        nearbyClinic[index].tuesday.toString(),
-                                    konsultasi: nearbyClinic[index]
-                                        .konsultasi
-                                        .toString(),
-                                    layananMedis: nearbyClinic[index]
-                                        .layananMedis
-                                        .toString(),
-                                    penginapan: nearbyClinic[index]
-                                        .penginapan
-                                        .toString(),
-                                    grooming:
-                                        nearbyClinic[index].grooming.toString(),
-                                    distance: nearbyClinic[index].distance,
-                                  )));
-                    },
-                    child: Container(
-                        margin: const EdgeInsets.only(bottom: 2),
-                        child: Card(
-                            // elevation: 1,
-                            child: Container(
-                          padding: const EdgeInsets.all(10),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(6),
-                            leading: Image.asset(
-                              'assets/ic_clinic2.png',
-                              width: 50,
-                              height: 50,
-                            ),
-                            title: Text(
-                              nearbyClinic[index].clinicName!,
-                              style: blackTextStyle.copyWith(
-                                  fontSize: 18, fontWeight: bold),
-                            ),
-                            subtitle: Text(nearbyClinic[index].address!,
-                                style: greyTextStyle.copyWith(fontSize: 14)),
-                            trailing: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.directions,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
-                        ))),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      );
-    } else {
-      return const SizedBox(
-        height: 340,
-        child: Center(
-          child: SpinKitDoubleBounce(
-            color: kSecondaryColor,
-          ),
-        ),
-      );
-    }
+    return Scaffold(
+      body: _currentPosition == null
+          ? locationOffWidget()
+          : _currentPosition != null
+              ? Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.9,
+                        margin: const EdgeInsets.only(top: 20, bottom: 60),
+                        child: ListView.builder(
+                          itemCount: nearbyClinic.length,
+                          itemBuilder: (context, index) {
+                            if (nearbyClinic.isEmpty) {
+                              return const Center(
+                                child: Text('No Data'),
+                              );
+                            }
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailMapPage(
+                                              clinicName: nearbyClinic[index]
+                                                  .clinicName
+                                                  .toString(),
+                                              address: nearbyClinic[index]
+                                                  .address
+                                                  .toString(),
+                                              phone: nearbyClinic[index]
+                                                  .phoneNumber,
+                                              uLat: _currentPosition!.latitude,
+                                              uLong:
+                                                  _currentPosition!.longitude,
+                                              cLat:
+                                                  nearbyClinic[index].latitude,
+                                              cLong:
+                                                  nearbyClinic[index].longitude,
+                                              rating:
+                                                  nearbyClinic[index].rating,
+                                              reviews:
+                                                  nearbyClinic[index].reviews,
+                                              website: nearbyClinic[index]
+                                                  .website
+                                                  .toString(),
+                                              wednesday: nearbyClinic[index]
+                                                  .wednesday
+                                                  .toString(),
+                                              thursday: nearbyClinic[index]
+                                                  .thursday
+                                                  .toString(),
+                                              friday: nearbyClinic[index]
+                                                  .friday
+                                                  .toString(),
+                                              saturday: nearbyClinic[index]
+                                                  .saturday
+                                                  .toString(),
+                                              sunday: nearbyClinic[index]
+                                                  .sunday
+                                                  .toString(),
+                                              monday: nearbyClinic[index]
+                                                  .monday
+                                                  .toString(),
+                                              tuesday: nearbyClinic[index]
+                                                  .tuesday
+                                                  .toString(),
+                                              konsultasi: nearbyClinic[index]
+                                                  .konsultasi
+                                                  .toString(),
+                                              layananMedis: nearbyClinic[index]
+                                                  .layananMedis
+                                                  .toString(),
+                                              penginapan: nearbyClinic[index]
+                                                  .penginapan
+                                                  .toString(),
+                                              grooming: nearbyClinic[index]
+                                                  .grooming
+                                                  .toString(),
+                                              distance:
+                                                  nearbyClinic[index].distance,
+                                            )));
+                              },
+                              child: Container(
+                                  margin: const EdgeInsets.only(bottom: 2),
+                                  child: Card(
+                                      // elevation: 1,
+                                      child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.all(6),
+                                      leading: Image.asset(
+                                        'assets/ic_clinic2.png',
+                                        width: 50,
+                                        height: 50,
+                                      ),
+                                      title: Text(
+                                        nearbyClinic[index].clinicName!,
+                                        style: blackTextStyle.copyWith(
+                                            fontSize: 18, fontWeight: bold),
+                                      ),
+                                      subtitle: Text(
+                                          nearbyClinic[index].address!,
+                                          style: greyTextStyle.copyWith(
+                                              fontSize: 14)),
+                                      trailing: Text(
+                                        nearbyClinic[index]
+                                                .distance!
+                                                .toStringAsFixed(2) +
+                                            ' km',
+                                        style: redTextStyle.copyWith(
+                                            fontSize: 14, fontWeight: bold),
+                                      ),
+                                    ),
+                                  ))),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox(
+                  height: 340,
+                  child: Center(
+                    child: SpinKitDoubleBounce(
+                      color: kSecondaryColor,
+                    ),
+                  ),
+                ),
+    );
   }
 }

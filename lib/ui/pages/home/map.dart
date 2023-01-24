@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -83,8 +82,10 @@ class _MapState extends State<MapPage> {
   }
 
   Future<void> getUserAndClinicLocation() async {
-    await _getUserPosition();
-    await _getNearClinicLocation();
+    Future.delayed(const Duration(seconds: 2), () async {
+      await _getUserPosition();
+      await _getNearClinicLocation();
+    });
   }
 
   void checkPermission() async {
@@ -269,6 +270,10 @@ class _MapState extends State<MapPage> {
                                   sunday: listClinic[index].sunday.toString(),
                                   monday: listClinic[index].monday.toString(),
                                   tuesday: listClinic[index].tuesday.toString(),
+                                  grooming: listClinic[index].grooming,
+                                  konsultasi: listClinic[index].konsultasi,
+                                  layananMedis: listClinic[index].layananMedis,
+                                  penginapan: listClinic[index].penginapan,
                                   distance: listClinic[index].distance,
                                 )));
                   },

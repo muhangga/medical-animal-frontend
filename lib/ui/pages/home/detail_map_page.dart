@@ -1,4 +1,3 @@
-
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -6,6 +5,7 @@ import 'package:medical_animal/core/api/api_service.dart';
 import 'package:medical_animal/core/api/models/route_model.dart';
 import 'package:medical_animal/core/api/models/route_navigation_model.dart';
 import 'package:medical_animal/core/common/constant.dart';
+import 'package:medical_animal/core/common/m_convertTo_km.dart';
 import 'package:medical_animal/core/common/theme.dart';
 
 import 'package:medical_animal/core/services/mapbox_directions.dart';
@@ -70,6 +70,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
   MapboxService mapboxService = MapboxService();
 
   ApiService apiService = ApiService();
+  Convert convert = Convert();
 
   List<RouteModel> routeModelList = [];
   late List<RouteNavigationModel> routeNavigationModelList = [];
@@ -532,7 +533,7 @@ class _DetailMapPageState extends State<DetailMapPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            " MapBox: ${snapshot.data!.routes![0].distance!.toStringAsFixed(2)} km",
+                            "MapBox: ${convert.convertMeterToKm(snapshot.data!.routes![0].distance!).toStringAsFixed(2)} km",
                             style: blackTextStyle.copyWith(
                                 fontSize: 14, fontWeight: bold),
                           ),
